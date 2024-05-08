@@ -11,7 +11,88 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context=".ui.login.LoginActivity">
+    <TextView
+            android:text="Inicio de Sesion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iniciosesion"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintHorizontal_bias="0.498"/>
+    <Button
+            android:text="Log In"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button"
+            app:layout_constraintTop_toBottomOf="@+id/TILcontraseña"
+            android:layout_marginTop="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+    <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
 
+            app:layout_constraintTop_toBottomOf="@+id/TILboleta"
+            android:id="@+id/TILcontraseña"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="12dp"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat.Large"
+            app:counterOverflowTextAppearance="@style/TextAppearance.AppCompat.Display4"
+    >
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:hint="Boleta"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/iniciosesion"
+            android:layout_marginTop="36dp"
+            android:id="@+id/TILboleta"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+
+            app:hintTextAppearance="@style/TextAppearance.AppCompat.Large"
+            app:counterOverflowTextAppearance="@style/TextAppearance.AppCompat.Display4"
+            app:helperTextTextAppearance="@style/TextAppearance.AppCompat.Display3">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="10"
+                android:inputType="number"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+            android:text="Quieres vender un producto?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/button"
+            android:layout_marginTop="32dp" android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+    <!--
     <EditText
             android:id="@+id/username"
             android:layout_width="0dp"
@@ -66,5 +147,5 @@
             app:layout_constraintStart_toStartOf="@+id/password"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.3"/>
-
+-->
 </androidx.constraintlayout.widget.ConstraintLayout>
