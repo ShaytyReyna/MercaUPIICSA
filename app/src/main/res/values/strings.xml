@@ -55,4 +55,10 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="Login"><![CDATA[->]]]></string>
+    <string name="Login0">login</string>
+    <string name="inicio_de_sesion">Inicio de Sesion</string>
+    <string name="log_in">Log In</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="boleta">Boleta</string>
+    <string name="quieres_vender_un_producto">¿Quieres vender un producto?</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.proyectomovil.ui.login
 
 import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
+import com.example.proyectomovil.MainActivity
 import com.example.proyectomovil.databinding.ActivityLoginBinding
 
 import com.example.proyectomovil.R
@@ -25,12 +27,19 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        //setContentView(binding.root)
-        setContentView(R.layout.activity_login)
+        setContentView(binding.root)
+
+        val registro = binding.btnRegistro
 
         val username = binding.TILboleta
         val password = binding.TILcontraseA
         val login = binding.button
+
+        registro?.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            Toast.makeText(this, "Butoncito registro funciona", Toast.LENGTH_LONG).show()
+        }
         //val loading = binding.loading
         /*
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())

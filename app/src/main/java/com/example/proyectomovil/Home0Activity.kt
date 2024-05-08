@@ -15,19 +15,13 @@ class Home0Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home0)
-
         binding = ActivityHome0Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /*val botoncito = findViewById<Button>(R.id.butoncito)
-
-        botoncito.setOnClickListener{*/
         binding.butoncito.setOnClickListener{
-            /*val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)*/
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
             Toast.makeText(this, "Butoncito funciona", Toast.LENGTH_LONG).show()
-            setContentView(R.layout.activity_login)
         }
     }
 }
