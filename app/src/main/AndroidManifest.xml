@@ -13,7 +13,13 @@
             android:theme="@style/Theme.ProyectoMovil"
             tools:targetApi="31">
         <activity
+                android:name=".registro_usuario"
+                android:exported="false"/>
+        <activity
                 android:name=".Home0Activity"
+                android:exported="false"/>
+        <activity
+                android:name=".RegisterUser"
                 android:exported="false"/>
         <activity
                 android:name=".ui.login.LoginActivity"

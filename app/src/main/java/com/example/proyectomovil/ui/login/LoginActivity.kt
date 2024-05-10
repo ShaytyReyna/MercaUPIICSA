@@ -9,6 +9,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
@@ -17,6 +18,8 @@ import com.example.proyectomovil.MainActivity
 import com.example.proyectomovil.databinding.ActivityLoginBinding
 
 import com.example.proyectomovil.R
+import com.example.proyectomovil.RegisterUser
+import com.example.proyectomovil.registro_usuario
 
 class LoginActivity : AppCompatActivity() {
 
@@ -29,17 +32,17 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val registro = binding.btnRegistro
-
         val username = binding.TILboleta
         val password = binding.TILcontraseA
         val login = binding.button
 
-        registro?.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
+        binding.btnRegistro?.setOnClickListener{
+            Log.d("LoginActivity", "Botón registro presionado")
+            val intent = Intent(this, registro_usuario::class.java)
+            Log.d("LoginActivity", "Creando intent para RegisterUser")
             startActivity(intent)
-            Toast.makeText(this, "Butoncito registro funciona", Toast.LENGTH_LONG).show()
         }
+
         //val loading = binding.loading
         /*
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
