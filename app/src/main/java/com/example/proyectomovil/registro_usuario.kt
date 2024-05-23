@@ -10,6 +10,8 @@ import com.example.proyectomovil.DatabaseHelper
 
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+//para validaciones
+import java.util.regex.Pattern
 
 class registro_usuario : AppCompatActivity() {
     private lateinit var user: User
@@ -42,6 +44,46 @@ class registro_usuario : AppCompatActivity() {
                 val facebook = findViewById<TextInputEditText>(R.id.textinputfacebook).text.toString()
                 val instagram = findViewById<TextInputEditText>(R.id.textinputinstagram).text.toString()
 
+                // Validaciones
+                if (!validarNombre(name)) {
+                    Toast.makeText(this@registro_usuario, "El nombre debe tener hasta 50 caracteres.", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (!validarTelefono(celular)) {
+                    Toast.makeText(this@registro_usuario, "El número de teléfono debe tener entre 10 y 15 dígitos.", Toast.LENGTH_SHORT).show()
+                    return
+                }
+
+                if (!validarBoleta(boleta)) {
+                    Toast.makeText(this@registro_usuario, "La boleta debe tener exactamente 10 dígitos.", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (!validarFacebook(facebook)) {
+                    Toast.makeText(this@registro_usuario, "El nombre de usuario de Facebook debe tener hasta 50 caracteres.", Toast.LENGTH_SHORT).show()
+                    return
+                }
+
+                if (!validarInstagram(instagram)) {
+                    Toast.makeText(this@registro_usuario, "El nombre de usuario de Instagram debe tener hasta 30 caracteres.", Toast.LENGTH_SHORT).show()
+                    return
+                }
+
+                if (!validarContraseña(contraseña)) {
+                    Toast.makeText(this@registro_usuario, "La contraseña debe tener al menos 8 caracteres, incluyendo al menos un número, una letra minúscula y una letra mayúscula.", Toast.LENGTH_SHORT).show()
+                    return
+                }
+
+                if (!confirmarContraseña(contraseña, confirmacionContraseña)) {
+                    Toast.makeText(this@registro_usuario, "Las contraseñas deben coincidir.", Toast.LENGTH_SHORT).show()
+                    return
+                }
+
+                // Validaciones adicionales para los horarios
+                if (!validarHorario(lunes) ||!validarHorario(martes) ||!validarHorario(miercoles) ||!validarHorario(jueves) ||!validarHorario(viernes)) {
+                    Toast.makeText(this@registro_usuario, "Los horarios deben tener hasta 15 caracteres.", Toast.LENGTH_SHORT).show()
+                    return
+                }
+
                 // Asigna los datos al objeto User
                 user.nombre = name
                 user.boleta = boleta
@@ -67,6 +109,8 @@ class registro_usuario : AppCompatActivity() {
                 }
             }
         })
+
+
 /*
         val name = findViewById<TextInputEditText>(R.id.name).text.toString()
         val boleta = findViewById<TextInputEditText>(R.id.textinputboleta).text.toString()
@@ -97,5 +141,39 @@ class registro_usuario : AppCompatActivity() {
         user.viernes = viernes
 */
 
+    }
+
+    // Funciones de validación
+    fun validarNombre(nombre: String): Boolean {
+        return nombre.length <= 50
+    }
+
+    fun validarTelefono(tel: String): Boolean {
+        return tel.matches("\\d{10,15}".toRegex())
+    }
+
+    fun validarBoleta(boleta: String): Boolean {
+        return boleta.length == 10 && boleta.matches("\\d+".toRegex())
+    }
+
+    fun validarFacebook(facebook: String): Boolean {
+        return facebook.length <= 50
+    }
+
+    fun validarInstagram(instagram: String): Boolean {
+        return instagram.length <= 30
+    }
+
+    fun validarContraseña(contraseña: String): Boolean {
+        val regex = """^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$""".toRegex()
+        return contraseña.matches(regex)
+    }
+
+    fun confirmarContraseña(contraseña: String, confirmacion: String): Boolean {
+        return contraseña == confirmacion
+    }
+
+    fun validarHorario(horario: String): Boolean {
+        return horario.length <= 15
     }
 }

@@ -19,9 +19,6 @@
                 android:name=".Home0Activity"
                 android:exported="false"/>
         <activity
-                android:name=".RegisterUser"
-                android:exported="false"/>
-        <activity
                 android:name=".ui.login.LoginActivity"
                 android:exported="false"
                 android:label="@string/title_activity_login"/>
