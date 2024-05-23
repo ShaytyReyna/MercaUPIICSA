@@ -18,7 +18,6 @@ import com.example.proyectomovil.MainActivity
 import com.example.proyectomovil.databinding.ActivityLoginBinding
 
 import com.example.proyectomovil.R
-import com.example.proyectomovil.RegisterUser
 import com.example.proyectomovil.registro_usuario
 
 class LoginActivity : AppCompatActivity() {
