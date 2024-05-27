@@ -61,4 +61,18 @@
     <string name="contrasena">Contraseña</string>
     <string name="boleta">Boleta</string>
     <string name="quieres_vender_un_producto">¿Quieres vender un producto?</string>
+    <string name="textview">TextView</string>
+    <string name="log_inR">Log In</string>
+    <string name="agregarR">Agregar</string>
+    <string name="productosR">Productos</string>
+    <string name="instagram">Instagram</string>
+    <string name="hola">Hola!</string>
+    <string name="nombre">Nombre</string>
+    <string name="boletaR">Boleta</string>
+    <string name="horarios_disponibles">Horarios Disponibles</string>
+    <string name="lunes">Lunes</string>
+    <string name="_07_00_22_00">07:00 - 22:00</string>
+    <string name="confirmar_contrase_a">Confirmar Contraseña</string>
+    <string name="martes">Martes</string>
+    <string name="martesHorario">07:00 - 22:00</string>
 </resources>

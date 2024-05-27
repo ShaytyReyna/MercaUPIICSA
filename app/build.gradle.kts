@@ -55,4 +55,6 @@ dependencies {
     implementation("androidx.sqlite:sqlite-framework:2.4.0")
     implementation("androidx.databinding:databinding-runtime:8.4.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
+    implementation("com.android.volley:volley:1.2.1")
+
 }
