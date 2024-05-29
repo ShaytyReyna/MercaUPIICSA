@@ -14,31 +14,64 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
+import com.example.proyectomovil.Home0Activity
 import com.example.proyectomovil.MainActivity
 import com.example.proyectomovil.databinding.ActivityLoginBinding
 
 import com.example.proyectomovil.R
+import com.example.proyectomovil.data.model.User
 import com.example.proyectomovil.registro_usuario
+import com.google.android.material.textfield.TextInputEditText
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val username = binding.TILboleta
-        val password = binding.TILcontraseA
-        val login = binding.button
+        // Inicializa el objeto User
+        user = User()
+
+        binding.btnLogIn?.setOnClickListener{
+            Log.d("LoginActivity", "Botón registro presionado")
+
+            val boleta = findViewById<TextInputEditText>(R.id.TIboleta).text.toString()
+            val contra = findViewById<TextInputEditText>(R.id.TIcontra).text.toString()
+
+            //Validaciones
+            var isValid = true
+
+            if(!validarCampoNoVacio(boleta,  "Boleta")){
+                isValid=false
+            }else if (!validarBoleta(boleta)) {
+                Toast.makeText(this, "La boleta debe tener exactamente 10 dígitos y solo números.", Toast.LENGTH_SHORT).show()
+                isValid = false
+            }
+
+            if (!validarCampoNoVacio(contra, "Contraseña")){
+                isValid=false
+            }else if (!validarContrasena(contra)) {
+                Toast.makeText(this, "La contraseña debe tener al menos 8 caracteres, incluyendo al menos un número, una letra minúscula y una letra mayúscula.", Toast.LENGTH_SHORT).show()
+                isValid = false
+            }
+
+            if(isValid){
+                //Asigna los datos al objeto User
+                user.boleta = boleta
+                user.contrasena =contra
+
+                val intent = Intent(this, Home0Activity::class.java)
+                startActivity(intent)
+            }
+
+        }
 
         binding.btnRegistro?.setOnClickListener{
-            Log.d("LoginActivity", "Botón registro presionado")
             val intent = Intent(this, registro_usuario::class.java)
-            Log.d("LoginActivity", "Creando intent para RegisterUser")
             startActivity(intent)
         }
 
@@ -124,6 +157,25 @@ class LoginActivity : AppCompatActivity() {
     private fun showLoginFailed(@StringRes errorString: Int) {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }*/
+// Funciones de validación
+private fun validarCampoNoVacio(campo: String, nombreCampo: String): Boolean {
+    return if (campo.isEmpty()) {
+        Toast.makeText(this, "El campo $nombreCampo no puede estar vacío.", Toast.LENGTH_SHORT).show()
+        false
+    } else {
+        true
+    }
+}
+
+    private fun validarBoleta(boleta: String): Boolean {
+        return boleta.length == 10 && boleta.matches("\\d+".toRegex())
+    }
+
+    private fun validarContrasena(contraseña: String): Boolean {
+        val regex = """^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$""".toRegex()
+        return contraseña.matches(regex)
+    }
+
 }
 
 /**
