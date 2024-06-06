@@ -24,7 +24,7 @@ import java.util.regex.Pattern
 
 class registro_usuario : AppCompatActivity() {
     private lateinit var binding: ActivityRegistroUsuarioBinding
-    private lateinit var user: User
+    lateinit var user: User
 
     var name : EditText?=null
     var boleta : EditText?=null
@@ -52,9 +52,10 @@ class registro_usuario : AppCompatActivity() {
         facebook = findViewById(R.id.textinputfacebook)
         instagram = findViewById(R.id.textinputinstagram)
 
+
     }
     fun clickBtnRegistro(view: View){
-        val url = "http://192.168.100.129:8080//movil/nuevoVendedor.php"
+        val url = "http://192.168.1.70//movil/NuevoVendedor.php"
         val queue = Volley.newRequestQueue(this)
 
         // Validaciones
@@ -120,6 +121,8 @@ class registro_usuario : AppCompatActivity() {
             user.confirmacionContra = confirmacionContraseña?.text.toString()
 
 
+            Toast.makeText(this, " ${user.boleta} :0", Toast.LENGTH_SHORT).show()
+
             var resultadoPOST = object : StringRequest(Request.Method.POST, url,
                 Response.Listener<String> { response ->
                     Toast.makeText(this, "a $response", Toast.LENGTH_LONG).show()
@@ -137,7 +140,7 @@ class registro_usuario : AppCompatActivity() {
 
             }
             queue.add(resultadoPOST)
-            val intent = Intent(this,registroHorario::class.java)
+            val intent = Intent(this,registroHorario::class.java).apply { putExtra("boleta", boleta?.text.toString()) }
             startActivity(intent)
 
         }

@@ -15,7 +15,8 @@ import com.example.proyectomovil.databinding.ActivityRegistroHorarioBinding
 
 class registroHorario : AppCompatActivity() {
     private lateinit var binding: ActivityRegistroHorarioBinding
-    private lateinit var user: User
+    lateinit var user: User
+
 
     var lunes : EditText?=null
     var martes : EditText?=null
@@ -32,6 +33,10 @@ class registroHorario : AppCompatActivity() {
         // Inicializa el objeto User
         user = User()
 
+
+
+
+
         lunes = findViewById(R.id.textinputlunes)
         martes = findViewById(R.id.textinputmartes)
         miercoles = findViewById(R.id.textinputmiercoles)
@@ -40,8 +45,8 @@ class registroHorario : AppCompatActivity() {
         sabado = findViewById(R.id.textinputsabado)
         domingo = findViewById(R.id.textinputdomingo)
     }
-    fun clickBtnRegistro(view: View){
-        val url = "http://192.168.100.129:8080//movil/nuevoHorario.php"
+    fun clickBtnRegistroH(view: View){
+        val url = "http://192.168.1.70//movil/NuevoHorario.php"
         val queue = Volley.newRequestQueue(this)
 
         // Validaciones
@@ -62,20 +67,23 @@ class registroHorario : AppCompatActivity() {
             user.sabado = sabado?.text.toString()
             user.domingo = domingo?.text.toString()
 
+            val boleta = intent.getStringExtra("boleta")!!
+            Toast.makeText(this, "$boleta  horario", Toast.LENGTH_SHORT).show()
+
             var resultadoPOST = object : StringRequest(Request.Method.POST, url,
                 Response.Listener<String> { response ->
                     Toast.makeText(this, "a $response", Toast.LENGTH_LONG).show()
                 }, Response.ErrorListener { error -> Toast.makeText(this, "$error :c", Toast.LENGTH_LONG).show() }) {
                 override fun getParams(): MutableMap<String, String>? {
                     val parametros = HashMap<String, String>()
-                    parametros.put("idBoleta", user.boleta)
-                    parametros.put("Nombre", lunes?.text.toString())
-                    parametros.put("Telefono", martes?.text.toString())
-                    parametros.put("Facebook", miercoles?.text.toString())
-                    parametros.put("Instagram", jueves?.text.toString())
-                    parametros.put("Contra", viernes?.text.toString())
-                    parametros.put("Contra", sabado?.text.toString())
-                    parametros.put("Contra", domingo?.text.toString())
+                    parametros.put("idVendedor", boleta)
+                    parametros.put("lunes", lunes?.text.toString())
+                    parametros.put("martes", martes?.text.toString())
+                    parametros.put("miercoles", miercoles?.text.toString())
+                    parametros.put("jueves", jueves?.text.toString())
+                    parametros.put("viernes", viernes?.text.toString())
+                    parametros.put("sabado", sabado?.text.toString())
+                    parametros.put("domingo", domingo?.text.toString())
                     return parametros
                 }
 

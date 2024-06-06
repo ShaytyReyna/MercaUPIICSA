@@ -214,10 +214,10 @@
     </com.google.android.material.textfield.TextInputLayout>
         <Button
                 android:id="@+id/btnRegistrar"
-                android:text="sSiguiente"
+                android:text="Siguiente"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="clickBtnRegistro"/>
+                android:onClick="clickBtnRegistroH"/>
     </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
