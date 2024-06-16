@@ -1,29 +1,25 @@
 package com.example.proyectomovil.ui.login
 
-import android.app.Activity
 import android.content.Intent
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.example.proyectomovil.Home0Activity
-import com.example.proyectomovil.MainActivity
-import com.example.proyectomovil.databinding.ActivityLoginBinding
-
 import com.example.proyectomovil.R
 import com.example.proyectomovil.data.model.User
+import com.example.proyectomovil.databinding.ActivityLoginBinding
 import com.example.proyectomovil.registro_usuario
 import com.google.android.material.textfield.TextInputEditText
 
 class LoginActivity : AppCompatActivity() {
+    private var boleta: EditText?=null
+    private var contra: EditText?=null
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var user: User
@@ -32,140 +28,122 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        boleta = findViewById<TextInputEditText>(R.id.TIboleta)
+        contra = findViewById<TextInputEditText>(R.id.TIcontra)
         // Inicializa el objeto User
         user = User()
 
-        binding.btnLogIn?.setOnClickListener{
-            Log.d("LoginActivity", "Botón registro presionado")
 
-            val boleta = findViewById<TextInputEditText>(R.id.TIboleta).text.toString()
-            val contra = findViewById<TextInputEditText>(R.id.TIcontra).text.toString()
-
-            //Validaciones
-            var isValid = true
-
-            if(!validarCampoNoVacio(boleta,  "Boleta")){
-                isValid=false
-            }else if (!validarBoleta(boleta)) {
-                Toast.makeText(this, "La boleta debe tener exactamente 10 dígitos y solo números.", Toast.LENGTH_SHORT).show()
-                isValid = false
-            }
-
-            if (!validarCampoNoVacio(contra, "Contraseña")){
-                isValid=false
-            }else if (!validarContrasena(contra)) {
-                Toast.makeText(this, "La contraseña debe tener al menos 8 caracteres, incluyendo al menos un número, una letra minúscula y una letra mayúscula.", Toast.LENGTH_SHORT).show()
-                isValid = false
-            }
-
-            if(isValid){
-                //Asigna los datos al objeto User
-                user.boleta = boleta
-                user.contrasena =contra
-
-                val intent = Intent(this, Home0Activity::class.java)
-                startActivity(intent)
-            }
-
-        }
-
-        binding.btnRegistro?.setOnClickListener{
-            val intent = Intent(this, registro_usuario::class.java)
-            startActivity(intent)
-        }
-
-        //val loading = binding.loading
+        // loggedInUser = LoggedInUser(boleta?.text.toString())
         /*
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-            .get(LoginViewModel::class.java)
+                binding.btnLogIn?.setOnClickListener{
+                    Log.d("LoginActivity", "Botón registro presionado")
 
-        loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
-            val loginState = it ?: return@Observer
+                    //Validaciones
+                    var isValid = true
 
-            // disable login button unless both username / password is valid
-            login.isEnabled = loginState.isDataValid
+                    if(!validarCampoNoVacio(boleta,  "Boleta")){
+                        isValid=false
+                    }else if (!validarBoleta(boleta)) {
+                        Toast.makeText(this, "La boleta debe tener exactamente 10 dígitos y solo números.", Toast.LENGTH_SHORT).show()
+                        isValid = false
+                    }
 
-            if (loginState.usernameError != null) {
-                username.error = getString(loginState.usernameError)
-            }
-            if (loginState.passwordError != null) {
-                password.error = getString(loginState.passwordError)
-            }
-        })
+                    if (!validarCampoNoVacio(contra, "Contraseña")){
+                        isValid=false
+                    }else if (!validarContrasena(contra)) {
+                        Toast.makeText(this, "La contraseña debe tener al menos 8 caracteres, incluyendo al menos un número, una letra minúscula y una letra mayúscula.", Toast.LENGTH_SHORT).show()
+                        isValid = false
+                    }
 
-        loginViewModel.loginResult.observe(this@LoginActivity, Observer {
-            val loginResult = it ?: return@Observer
+                    if(isValid){
+                        //Asigna los datos al objeto User
+                        user.boleta = boleta
+                        user.contrasena =contra
 
-            loading.visibility = View.GONE
-            if (loginResult.error != null) {
-                showLoginFailed(loginResult.error)
-            }
-            if (loginResult.success != null) {
-                updateUiWithUser(loginResult.success)
-            }
-            setResult(Activity.RESULT_OK)
+                        val intent = Intent(this, Home0Activity::class.java)
+                        startActivity(intent)
+                    }
 
-            //Complete and destroy login activity once successful
-            finish()
-        })
+                }
 
-        username.afterTextChanged {
-            loginViewModel.loginDataChanged(
-                username.text.toString(),
-                password.text.toString()
-            )
+               */
+
+
+    }
+
+
+    fun clicLogIn(view: View){
+        val queue = Volley.newRequestQueue(this)
+
+        //Toast.makeText(this, "${boleta}" ,Toast.LENGTH_SHORT ).show()
+        var isValid = true
+
+        if(!validarCampoNoVacio(boleta?.text.toString(),  "Boleta")){
+            isValid=false
+        }else if (!validarBoleta(boleta?.text.toString())) {
+            Toast.makeText(this, "La boleta debe tener exactamente 10 dígitos y solo números.", Toast.LENGTH_SHORT).show()
+            isValid = false
         }
 
-        password.apply {
-            afterTextChanged {
-                loginViewModel.loginDataChanged(
-                    username.text.toString(),
-                    password.text.toString()
-                )
-            }
+        if (!validarCampoNoVacio(contra?.text.toString(), "Contraseña")){
+            isValid=false
+        }else if (!validarContrasena(contra?.text.toString())) {
+            Toast.makeText(this, "La contraseña debe tener al menos 8 caracteres, incluyendo al menos un número, una letra minúscula y una letra mayúscula.", Toast.LENGTH_SHORT).show()
+            isValid = false
+        }
 
-            setOnEditorActionListener { _, actionId, _ ->
-                when (actionId) {
-                    EditorInfo.IME_ACTION_DONE ->
-                        loginViewModel.login(
-                            username.text.toString(),
-                            password.text.toString()
-                        )
+        if(isValid){
+            //Asigna los datos al objeto User
+            user.boleta = boleta?.text.toString()
+            user.contrasena =contra?.text.toString()
+            //val url = "http://192.168.0.22//movil/login.php?idBoleta=${boleta?.text.toString()}"
+            val url = "http://192.168.0.8:8080//movil/login.php?idBoleta=${boleta?.text.toString()}"
+
+            Toast.makeText(this, "${boleta?.text.toString()}" ,Toast.LENGTH_SHORT ).show()
+            Toast.makeText(this, "${contra?.text.toString()}" ,Toast.LENGTH_SHORT ).show()
+
+            val jsonObjectRequest = JsonObjectRequest(
+                Request.Method.GET,url,null,
+                { response ->
+                    val contraBD =   response.getString("Contra")
+                    Toast.makeText(this, response.getString("Contra") ,Toast.LENGTH_SHORT ).show()
+
+                    if (contraBD == contra?.text.toString() ){
+                        Toast.makeText(this,"Datos correctos", Toast.LENGTH_LONG ).show()
+                        //home vendedor
+                        val intent = Intent(this, Home0Activity::class.java)
+                        startActivity(intent)
+                    }else{
+                        Toast.makeText(this,"La contraseña no coincide", Toast.LENGTH_LONG ).show()
+                    }
+                }, { error ->
+                    //Toast.makeText(this,"No existe esa boleta",Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
+                    Log.e("LoginActivity", error.toString())
                 }
-                false
-            }
 
-            login.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
-            }
-        }*/
-    }
-/*
-    private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-        // TODO : initiate successful logged in experience
-        Toast.makeText(
-            applicationContext,
-            "$welcome $displayName",
-            Toast.LENGTH_LONG
-        ).show()
+            )
+            queue.add(jsonObjectRequest)
+        }
     }
 
-    private fun showLoginFailed(@StringRes errorString: Int) {
-        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
-    }*/
-// Funciones de validación
-private fun validarCampoNoVacio(campo: String, nombreCampo: String): Boolean {
-    return if (campo.isEmpty()) {
-        Toast.makeText(this, "El campo $nombreCampo no puede estar vacío.", Toast.LENGTH_SHORT).show()
-        false
-    } else {
-        true
+
+
+    fun btnRegistro(view: View){
+        val intent = Intent(this, registro_usuario::class.java)
+        startActivity(intent)
     }
-}
+
+    // Funciones de validación
+    private fun validarCampoNoVacio(campo: String, nombreCampo: String): Boolean {
+        return if (campo.isEmpty()) {
+            Toast.makeText(this, "El campo $nombreCampo no puede estar vacío.", Toast.LENGTH_SHORT).show()
+            false
+        } else {
+            true
+        }
+    }
 
     private fun validarBoleta(boleta: String): Boolean {
         return boleta.length == 10 && boleta.matches("\\d+".toRegex())
@@ -178,17 +156,3 @@ private fun validarCampoNoVacio(campo: String, nombreCampo: String): Boolean {
 
 }
 
-/**
- * Extension function to simplify setting an afterTextChanged action to EditText components.
- */
-fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
-    this.addTextChangedListener(object : TextWatcher {
-        override fun afterTextChanged(editable: Editable?) {
-            afterTextChanged.invoke(editable.toString())
-        }
-
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-    })
-}

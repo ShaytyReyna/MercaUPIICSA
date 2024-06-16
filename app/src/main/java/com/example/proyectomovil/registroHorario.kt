@@ -2,6 +2,7 @@ package com.example.proyectomovil
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -33,10 +34,6 @@ class registroHorario : AppCompatActivity() {
         // Inicializa el objeto User
         user = User()
 
-
-
-
-
         lunes = findViewById(R.id.textinputlunes)
         martes = findViewById(R.id.textinputmartes)
         miercoles = findViewById(R.id.textinputmiercoles)
@@ -46,7 +43,8 @@ class registroHorario : AppCompatActivity() {
         domingo = findViewById(R.id.textinputdomingo)
     }
     fun clickBtnRegistroH(view: View){
-        val url = "http://192.168.1.70//movil/NuevoHorario.php"
+        //val url = "http://192.168.100.129:8080/movil/nuevoHorario.php"
+        val url = "http://192.168.0.8:8080/movil/nuevoHorario.php"
         val queue = Volley.newRequestQueue(this)
 
         // Validaciones
@@ -68,12 +66,15 @@ class registroHorario : AppCompatActivity() {
             user.domingo = domingo?.text.toString()
 
             val boleta = intent.getStringExtra("boleta")!!
-            Toast.makeText(this, "$boleta  horario", Toast.LENGTH_SHORT).show()
 
             var resultadoPOST = object : StringRequest(Request.Method.POST, url,
                 Response.Listener<String> { response ->
                     Toast.makeText(this, "a $response", Toast.LENGTH_LONG).show()
-                }, Response.ErrorListener { error -> Toast.makeText(this, "$error :c", Toast.LENGTH_LONG).show() }) {
+                    Log.d("ResultadoPOST", "a $response")
+                }, Response.ErrorListener { error ->
+                    Toast.makeText(this, "$error :c", Toast.LENGTH_LONG).show()
+                    Log.d("ResultadoPOST", "$error :c")
+                }) {
                 override fun getParams(): MutableMap<String, String>? {
                     val parametros = HashMap<String, String>()
                     parametros.put("idVendedor", boleta)
@@ -89,7 +90,7 @@ class registroHorario : AppCompatActivity() {
 
             }
             queue.add(resultadoPOST)
-            val intent = Intent(this, Home0Activity::class.java)
+            val intent = Intent(this, NewProducto::class.java).apply { putExtra("boleta", boleta)}
             startActivity(intent)
         }
     }

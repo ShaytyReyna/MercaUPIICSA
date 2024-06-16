@@ -20,6 +20,7 @@ class Home0Activity : AppCompatActivity() {
 
         binding.butoncito.setOnClickListener{
             val intent = Intent(this, LoginActivity::class.java)
+            //val intent = Intent(this, NewProducto::class.java)
             startActivity(intent)
             Toast.makeText(this, "Butoncito funciona", Toast.LENGTH_LONG).show()
         }

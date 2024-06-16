@@ -144,31 +144,33 @@
             android:id="@+id/viernes"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" tools:layout_editor_absoluteY="474dp"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/textinputlayoutviernes"
-            android:layout_width="360dp"
-            android:layout_height="wrap_content"
-            android:hint="07:00 - 22:00"
+        <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/textinputlayoutviernes"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
 
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="6dp"
-            app:layout_constraintTop_toBottomOf="@+id/viernes"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp">
+                android:hint="07:00 - 22:00"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="6dp"
+                app:layout_constraintTop_toBottomOf="@+id/viernes"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp">
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textinputviernes"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:textColorHint="#546E7A"/>
-    </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
             android:text="Sabado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sabado"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" tools:layout_editor_absoluteY="581dp"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            tools:layout_editor_absoluteY="581dp"/>
     <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:id="@+id/textinputlayoutsabado"
@@ -215,9 +217,9 @@
         <Button
                 android:id="@+id/btnRegistrar"
                 android:text="Siguiente"
-                android:layout_width="match_parent"
+                android:layout_width="346dp"
                 android:layout_height="wrap_content"
-                android:onClick="clickBtnRegistroH"/>
+                android:onClick="clickBtnRegistroH" android:textSize="20sp"/>
     </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

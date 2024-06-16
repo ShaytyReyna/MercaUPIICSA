@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -55,7 +56,8 @@ class registro_usuario : AppCompatActivity() {
 
     }
     fun clickBtnRegistro(view: View){
-        val url = "http://192.168.1.70//movil/NuevoVendedor.php"
+        //val url = "http://192.168.100.129:8080/movil/nuevoVendedor.php"
+        val url = "http://192.168.0.8:8080/movil/nuevoVendedor.php"
         val queue = Volley.newRequestQueue(this)
 
         // Validaciones
@@ -121,12 +123,16 @@ class registro_usuario : AppCompatActivity() {
             user.confirmacionContra = confirmacionContraseña?.text.toString()
 
 
-            Toast.makeText(this, " ${user.boleta} :0", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, " ${user.boleta} :0", Toast.LENGTH_SHORT).show()
 
             var resultadoPOST = object : StringRequest(Request.Method.POST, url,
                 Response.Listener<String> { response ->
                     Toast.makeText(this, "a $response", Toast.LENGTH_LONG).show()
-                }, Response.ErrorListener { error -> Toast.makeText(this, "$error :c", Toast.LENGTH_LONG).show() }) {
+                    Log.d("ResultadoPOST", "a $response")
+                }, Response.ErrorListener { error ->
+                    Toast.makeText(this, "$error :c", Toast.LENGTH_LONG).show()
+                    Log.d("ResultadoPOST", "$error :c")
+                }) {
                 override fun getParams(): MutableMap<String, String>? {
                     val parametros = HashMap<String, String>()
                     parametros.put("idBoleta", boleta?.text.toString())

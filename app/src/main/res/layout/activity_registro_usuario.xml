@@ -200,9 +200,10 @@
             <Button
                     android:id="@+id/btnRegistrar"
                     android:text="Siguiente"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="clickBtnRegistro"/>
+                    android:onClick="clickBtnRegistro"
+                    android:textSize="24sp"/>
 
 
         </LinearLayout>
