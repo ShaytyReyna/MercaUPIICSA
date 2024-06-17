@@ -44,8 +44,9 @@ class NewProducto : AppCompatActivity() {
     private lateinit var checkBoxJoyeria: CheckBox
 
     private var bitmap: Bitmap? = null
-    private val uploadUrl = "http://192.168.1.70/movil/NuevoProducto.php"
-    //private val uploadUrl = "http://192.168.0.8:8080/movil/nuevoProducto.php"
+    //private val uploadUrl = "http://192.168.1.70/movil/NuevoProducto.php"
+    private val uploadUrl = "http://192.168.100.129:8080/movil/nuevoProducto.php"
+
     private val keyImage = "foto"
     private val keyNombre = "nombre"
     private val keyPrecio = "precio"

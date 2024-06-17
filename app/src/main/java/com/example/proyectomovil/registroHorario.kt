@@ -43,8 +43,8 @@ class registroHorario : AppCompatActivity() {
         domingo = findViewById(R.id.textinputdomingo)
     }
     fun clickBtnRegistroH(view: View){
-        val url = "http://192.168.1.70/movil/NuevoHorario.php"
-        //val url = "http://192.168.0.8:8080/movil/nuevoHorario.php"
+        //val url = "http://192.168.1.70/movil/NuevoHorario.php"
+        val url = "http://192.168.100.129:8080/movil/nuevoHorario.php"
         val queue = Volley.newRequestQueue(this)
 
         // Validaciones

@@ -2,36 +2,39 @@ package com.example.proyectomovil
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TableLayout
+import android.widget.TextView
 import android.widget.Toast
 import com.android.volley.Request
-import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
-import com.example.proyectomovil.databinding.ActivityLoginBinding
+import com.bumptech.glide.Glide
 import com.example.proyectomovil.databinding.ActivityPerfilVendedorBinding
 
 class PerfilVendedor : AppCompatActivity() {
     private lateinit var binding: ActivityPerfilVendedorBinding
-    var nombre : EditText?=null
-    var telefono : EditText?=null
-    var face : EditText?=null
-    var insta : EditText?=null
-    var lunes : EditText?=null
-    var martes : EditText?=null
-    var miercoles : EditText?=null
-    var jueves : EditText?=null
-    var viernes : EditText?=null
-    var sabado : EditText?=null
-    var domingo : EditText?=null
-    var tbProductos: TableLayout?= null
+    var nombre: EditText? = null
+    var telefono: EditText? = null
+    var face: EditText? = null
+    var insta: EditText? = null
+    var lunes: EditText? = null
+    var martes: EditText? = null
+    var miercoles: EditText? = null
+    var jueves: EditText? = null
+    var viernes: EditText? = null
+    var sabado: EditText? = null
+    var domingo: EditText? = null
+    var tbProductos: TableLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_perfil_vendedor)
-
+        binding = ActivityPerfilVendedorBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         nombre = findViewById(R.id.textinputNombre)
         telefono = findViewById(R.id.textinputTelefono)
@@ -48,35 +51,63 @@ class PerfilVendedor : AppCompatActivity() {
         tbProductos = findViewById(R.id.tbProductos)
         tbProductos?.removeAllViews()
 
-        for(i in 0 until 5){
-            val registro = LayoutInflater.from(this).inflate(R.layout.table_row_producto, null, false)
-            val colNombre = registro.findViewById<View>(R.id.colNombre)
-        }
         val queue = Volley.newRequestQueue(this)
         val boleta = intent.getStringExtra("boletaI")!!
-        val url = "http://192.168.1.70//movil/Consulta.php?idBoleta=${boleta}"
+        val url = "http://192.168.100.129:8080/Movil/consulta.php?idBoleta=${boleta}"
+        val jsonArrayRequest = JsonArrayRequest(
+            Request.Method.GET, url, null,
+            { response ->
+                if (response.length() > 0) {
+                    val jsonObject = response.getJSONObject(0)
+                    nombre?.setText(jsonObject.getString("Nombre"))
+                    telefono?.setText(jsonObject.getString("Telefono"))
+                    face?.setText(jsonObject.getString("Facebook"))
+                    insta?.setText(jsonObject.getString("Instagram"))
+                    lunes?.setText(jsonObject.getString("lunes"))
+                    martes?.setText(jsonObject.getString("martes"))
+                    miercoles?.setText(jsonObject.getString("miercoles"))
+                    jueves?.setText(jsonObject.getString("jueves"))
+                    viernes?.setText(jsonObject.getString("viernes"))
+                    sabado?.setText(jsonObject.getString("sabado"))
+                    domingo?.setText(jsonObject.getString("domingo"))
 
-        val jsonObjectRequest = JsonObjectRequest(
-            Request.Method.GET,url,null,
-            {response ->
-                nombre?.setText(response.getString("Nombre"))
-                telefono?.setText(response.getString("Telefono"))
-                face?.setText(response.getString("Facebook"))
-                insta?.setText(response.getString("Instagram"))
-                lunes?.setText(response.getString("lunes"))
-                martes?.setText(response.getString("martes"))
-                miercoles?.setText(response.getString("miercoles"))
-                jueves?.setText(response.getString("jueves"))
-                viernes?.setText(response.getString("viernes"))
-                sabado?.setText(response.getString("sabado"))
-                domingo?.setText(response.getString("domingo"))
+                    // Iterar a través de los productos y añadir filas a la tabla
+                    for (i in 0 until response.length()) {
+                        val producto = response.getJSONObject(i)
+                        val registro = LayoutInflater.from(this).inflate(R.layout.table_row_producto, null, false)
+                        val colNombre = registro.findViewById<TextView>(R.id.colNombre)
+                        val colPrecio = registro.findViewById<TextView>(R.id.colPrecio)
+                        val colIMG = registro.findViewById<ImageView>(R.id.colIMG)
+                        val colEditar = registro.findViewById<View>(R.id.colEditar)
+                        val colBorrar = registro.findViewById<View>(R.id.colBorrar)
 
-            },{error->
-                Toast.makeText(this,error.toString(), Toast.LENGTH_LONG).show()
+                        colNombre.text = producto.getString("ProductoNombre")
+                        colPrecio.text = producto.getString("ProductoPrecio")
+
+                        // Cargar imagen usando Glide
+                        val imageUrl = producto.getString("IMG")
+                        Glide.with(this).load(imageUrl).into(colIMG)
+
+                        colEditar.id = i
+                        colBorrar.id = i
+                        tbProductos?.addView(registro)
+                    }
+                } else {
+                    Toast.makeText(this, "No hay registros", Toast.LENGTH_LONG).show()
+                }
+            }, { error ->
+                Toast.makeText(this, error.toString(), Toast.LENGTH_LONG).show()
+                Log.e("PerfilVendedor", error.toString())
             }
-
         )
-        queue.add(jsonObjectRequest)
+        queue.add(jsonArrayRequest)
+    }
 
+    fun clickTablaEditar(view: View) {
+        Toast.makeText(this, view.id.toString(), Toast.LENGTH_LONG).show()
+    }
+
+    fun clickTablaBorrar(view: View) {
+        Toast.makeText(this, view.id.toString(), Toast.LENGTH_LONG).show()
     }
 }

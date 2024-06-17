@@ -1,5 +1,6 @@
 package com.example.proyectomovil.ui.login
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -98,8 +99,8 @@ class LoginActivity : AppCompatActivity() {
             //Asigna los datos al objeto User
             user.boleta = boleta?.text.toString()
             user.contrasena =contra?.text.toString()
-            val url = "http://192.168.1.70//movil/login.php?idBoleta=${boleta?.text.toString()}"
-            //val url = "http://192.168.0.8:8080//movil/login.php?idBoleta=${boleta?.text.toString()}"
+            //val url = "http://192.168.1.70//movil/login.php?idBoleta=${boleta?.text.toString()}"
+            val url = "http://192.168.100.129:8080//movil/login.php?idBoleta=${boleta?.text.toString()}"
 
             val jsonObjectRequest = JsonObjectRequest(
                 Request.Method.GET,url,null,

@@ -22,9 +22,7 @@
         <activity
                 android:name=".registroHorario"
                 android:exported="false"/>
-        <activity
-                android:name=".PerfilVendedor"
-                android:exported="false"/>
+        <activity android:name=".PerfilVendedor" />
         <activity
                 android:name=".registro_usuario"
                 android:exported="false"/>
