@@ -11,6 +11,7 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.proyectomovil.Home0Activity
+import com.example.proyectomovil.PerfilVendedor
 import com.example.proyectomovil.R
 import com.example.proyectomovil.data.model.User
 import com.example.proyectomovil.databinding.ActivityLoginBinding
@@ -97,22 +98,19 @@ class LoginActivity : AppCompatActivity() {
             //Asigna los datos al objeto User
             user.boleta = boleta?.text.toString()
             user.contrasena =contra?.text.toString()
-            //val url = "http://192.168.0.22//movil/login.php?idBoleta=${boleta?.text.toString()}"
-            val url = "http://192.168.0.8:8080//movil/login.php?idBoleta=${boleta?.text.toString()}"
-
-            Toast.makeText(this, "${boleta?.text.toString()}" ,Toast.LENGTH_SHORT ).show()
-            Toast.makeText(this, "${contra?.text.toString()}" ,Toast.LENGTH_SHORT ).show()
+            val url = "http://192.168.1.70//movil/login.php?idBoleta=${boleta?.text.toString()}"
+            //val url = "http://192.168.0.8:8080//movil/login.php?idBoleta=${boleta?.text.toString()}"
 
             val jsonObjectRequest = JsonObjectRequest(
                 Request.Method.GET,url,null,
                 { response ->
                     val contraBD =   response.getString("Contra")
-                    Toast.makeText(this, response.getString("Contra") ,Toast.LENGTH_SHORT ).show()
+                    //Toast.makeText(this, response.getString("Contra") ,Toast.LENGTH_SHORT ).show()
 
                     if (contraBD == contra?.text.toString() ){
                         Toast.makeText(this,"Datos correctos", Toast.LENGTH_LONG ).show()
                         //home vendedor
-                        val intent = Intent(this, Home0Activity::class.java)
+                        val intent = Intent(this, PerfilVendedor::class.java).apply { putExtra("boletaI", boleta?.text.toString() ) }
                         startActivity(intent)
                     }else{
                         Toast.makeText(this,"La contraseña no coincide", Toast.LENGTH_LONG ).show()

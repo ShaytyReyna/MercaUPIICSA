@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColorHint="#A1887F" android:id="@+id/TIcontra"/>
+                android:textColorHint="#A1887F" android:id="@+id/TIcontra" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

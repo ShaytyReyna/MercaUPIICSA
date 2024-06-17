@@ -25,6 +25,7 @@ import android.util.Base64
 import android.util.Log
 
 import com.example.proyectomovil.data.model.User
+import com.example.proyectomovil.ui.login.LoginActivity
 import java.util.*
 
 class NewProducto : AppCompatActivity() {
@@ -43,8 +44,8 @@ class NewProducto : AppCompatActivity() {
     private lateinit var checkBoxJoyeria: CheckBox
 
     private var bitmap: Bitmap? = null
-    //private val uploadUrl = "http://192.168.100.129:8080/movil/nuevoProducto.php"
-    private val uploadUrl = "http://192.168.0.8:8080/movil/nuevoProducto.php"
+    private val uploadUrl = "http://192.168.1.70/movil/NuevoProducto.php"
+    //private val uploadUrl = "http://192.168.0.8:8080/movil/nuevoProducto.php"
     private val keyImage = "foto"
     private val keyNombre = "nombre"
     private val keyPrecio = "precio"
@@ -81,7 +82,7 @@ class NewProducto : AppCompatActivity() {
         btnSubir = findViewById(R.id.buttonagregar)
         btnSubir.setOnClickListener { uploadImage()
             // Redirigir a Home0Activity
-            val intent = Intent(this@NewProducto, PerfilVendedor ::class.java)
+            val intent = Intent(this@NewProducto, LoginActivity ::class.java)
             startActivity(intent)
         }
 
@@ -116,7 +117,7 @@ class NewProducto : AppCompatActivity() {
                 Request.Method.POST, uploadUrl,
                 Response.Listener<String?> { response ->
                     progressBar.visibility = ProgressBar.GONE
-                    Snackbar.make(findViewById(android.R.id.content), response ?: "Error", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(findViewById(android.R.id.content), response ?: "Error" , Snackbar.LENGTH_LONG).show()
                 },
                 Response.ErrorListener { error ->
                     progressBar.visibility = ProgressBar.GONE
