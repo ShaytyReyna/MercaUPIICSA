@@ -43,7 +43,7 @@ class AgregarProducto : AppCompatActivity() {
     private var bitmap: Bitmap? = null
     //private val uploadUrl = "http://192.168.1.70/movil/NuevoProducto.php"
     private val uploadUrl = "http://192.168.100.129:8080/movil/nuevoProducto.php"
-    //private val uploadUrl = "http://10.109.77.160:8080/movil/nuevoProducto.php"
+    //private val uploadUrl = "http://10.109.75.143:8080/movil/nuevoProducto.php"
 
     private val keyImage = "foto"
     private val keyNombre = "nombre"
@@ -61,7 +61,7 @@ class AgregarProducto : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_new_producto)
+        setContentView(R.layout.activity_agregar_producto)
 
         // Inicializa el objeto User
         user = User()

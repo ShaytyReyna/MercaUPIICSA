@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+        <ImageView
+                android:id="@+id/colIMG"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:contentDescription="@string/todo"
+                tools:ignore="ContentDescription" />
+
+        <TextView
+                android:id="@+id/colNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+        <TextView
+                android:id="@+id/colPrecio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+        <Button
+                android:id="@+id/btnPV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ver perfil vendedor"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="6dp" />
+    </LinearLayout>
+</TableRow>

@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley
 import com.example.proyectomovil.data.model.User
 import com.example.proyectomovil.databinding.ActivityMainBinding
 import com.example.proyectomovil.databinding.ActivityRegistroUsuarioBinding
+import com.example.proyectomovil.ui.login.LoginActivity
 
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -58,7 +59,7 @@ class registro_usuario : AppCompatActivity() {
     fun clickBtnRegistro(view: View){
         //val url = "http://192.168.1.70/movil/NuevoVendedor.php"
         val url = "http://192.168.100.129:8080/movil/nuevoVendedor.php"
-        //val url = "http://10.109.77.160:8080/movil/nuevoVendedor.php"
+        //val url = "http://10.109.75.143:8080/movil/nuevoVendedor.php"
         val queue = Volley.newRequestQueue(this)
 
         // Validaciones
@@ -192,5 +193,9 @@ class registro_usuario : AppCompatActivity() {
         return contraseña == confirmacion
     }
 
-
+    fun clickRegresar(view: View){
+        // Redirigir a Login
+        val intent = Intent(this@registro_usuario, LoginActivity ::class.java)
+        startActivity(intent)
+    }
 }

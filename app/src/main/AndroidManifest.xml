@@ -17,6 +17,12 @@
             android:usesCleartextTraffic="true"
             tools:targetApi="31">
         <activity
+                android:name=".PerfilVU"
+                android:exported="false"/>
+        <activity
+                android:name=".EditarProducto"
+                android:exported="false"/>
+        <activity
                 android:name=".AgregarProducto"
                 android:exported="false"/>
         <activity

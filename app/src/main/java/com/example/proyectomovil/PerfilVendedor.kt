@@ -32,6 +32,7 @@ class PerfilVendedor : AppCompatActivity() {
     var domingo: EditText? = null
     var tbProductos: TableLayout? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPerfilVendedorBinding.inflate(layoutInflater)
@@ -58,7 +59,7 @@ class PerfilVendedor : AppCompatActivity() {
         val queue = Volley.newRequestQueue(this)
 
         val url = "http://192.168.100.129:8080/Movil/consulta.php?idBoleta=${boleta}"
-        //val url = "http://10.109.77.160:8080/Movil/consulta.php?idBoleta=${boleta}"
+        //val url = "http://10.109.75.143:8080/Movil/consulta.php?idBoleta=${boleta}"
         val jsonArrayRequest = JsonArrayRequest(
             Request.Method.GET, url, null,
             { response ->
@@ -85,16 +86,20 @@ class PerfilVendedor : AppCompatActivity() {
                         val colIMG = registro.findViewById<ImageView>(R.id.colIMG)
                         val colEditar = registro.findViewById<View>(R.id.colEditar)
                         val colBorrar = registro.findViewById<View>(R.id.colBorrar)
+                        var IdProducto = 0
 
                         colNombre.text = producto.getString("ProductoNombre")
                         colPrecio.text = producto.getString("ProductoPrecio")
+                        IdProducto = producto.getInt("ProductoId")
+
+
 
                         // Cargar imagen usando Glide
                         val imageUrl = producto.getString("IMG")
                         Glide.with(this).load(imageUrl).into(colIMG)
 
-                        colEditar.id = i
-                        colBorrar.id = i
+                        colEditar.id = IdProducto
+                        colBorrar.id = IdProducto
                         tbProductos?.addView(registro)
                     }
                 } else {
@@ -109,17 +114,34 @@ class PerfilVendedor : AppCompatActivity() {
     }
 
     fun clickTablaEditar(view: View) {
+        val boleta = intent.getStringExtra("boletaI") ?: ""
         Toast.makeText(this, view.id.toString(), Toast.LENGTH_LONG).show()
+        //Pasamos a Editar producto pasandole el id del producto y la bol
+        val producto = intent.getStringExtra(view.id.toString())
+        val intent = Intent(this@PerfilVendedor, EditarProducto :: class.java)
+        intent.putExtra("BoletaPV", boleta)
+        intent.putExtra("ProductoIdPV",producto)
+        startActivity(intent)
+        Toast.makeText(this, boleta, Toast.LENGTH_LONG).show()
     }
 
     fun clickTablaBorrar(view: View) {
+        val boleta = intent.getStringExtra("boletaI") ?: ""
         Toast.makeText(this, view.id.toString(), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, boleta, Toast.LENGTH_LONG).show()
+
+        val producto = intent.getStringExtra(view.id.toString())
     }
 
     fun clickAgregarP(view: View){
         // Redirigir a Agregar producto
         val boleta = intent.getStringExtra("boletaI") ?: ""
         val intent = Intent(this@PerfilVendedor, AgregarProducto ::class.java).apply { putExtra("boleta", boleta)}
+        startActivity(intent)
+    }
+    fun clickRegresar(view: View){
+        // Redirigir a Home
+        val intent = Intent(this@PerfilVendedor, Home0Activity ::class.java)
         startActivity(intent)
     }
 }
