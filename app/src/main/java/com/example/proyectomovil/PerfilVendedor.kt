@@ -115,15 +115,14 @@ class PerfilVendedor : AppCompatActivity() {
 
     fun clickTablaEditar(view: View) {
         val boleta = intent.getStringExtra("boletaI") ?: ""
-        Toast.makeText(this, view.id.toString(), Toast.LENGTH_LONG).show()
-        //Pasamos a Editar producto pasandole el id del producto y la bol
-        val producto = intent.getStringExtra(view.id.toString())
-        val intent = Intent(this@PerfilVendedor, EditarProducto :: class.java)
+        val productoId = view.id.toString()
+
+        val intent = Intent(this@PerfilVendedor, EditarProducto::class.java)
         intent.putExtra("BoletaPV", boleta)
-        intent.putExtra("ProductoIdPV",producto)
+        intent.putExtra("ProductoIdPV", productoId)
         startActivity(intent)
-        Toast.makeText(this, boleta, Toast.LENGTH_LONG).show()
     }
+
 
     fun clickTablaBorrar(view: View) {
         val boleta = intent.getStringExtra("boletaI") ?: ""

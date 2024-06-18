@@ -24,7 +24,6 @@ import android.util.Log
 import com.example.proyectomovil.data.model.User
 import com.example.proyectomovil.ui.login.LoginActivity
 import java.util.*
-
 class EditarProducto : AppCompatActivity() {
     lateinit var user: User
 
@@ -41,8 +40,6 @@ class EditarProducto : AppCompatActivity() {
     private lateinit var checkBoxJoyeria: CheckBox
 
     private var bitmap: Bitmap? = null
-    //private val uploadUrl = "http://192.168.1.70/movil/NuevoProducto.php"
-    //private val uploadUrl = "http://192.168.100.129:8080/movil/nuevoProducto.php"
     private val uploadUrl = "http://10.109.75.143:8080/movil/nuevoProducto.php"
 
     private val keyImage = "foto"
@@ -56,13 +53,13 @@ class EditarProducto : AppCompatActivity() {
     private val keyJoyeria = "Joyeria"
 
     private var boleta: String? = null
+    private var productoid: String? = null
 
     private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editar_producto)
 
-        // Inicializa el objeto User
         user = User()
 
         btnBuscar = findViewById(R.id.btnBuscar)
@@ -71,22 +68,28 @@ class EditarProducto : AppCompatActivity() {
         et1 = findViewById(R.id.textinputPrecioP)
         iv = findViewById(R.id.imageView)
 
-        // Inicializa los CheckBox
         checkBoxAccesorios = findViewById(R.id.checkBoxAccesorios)
         checkBoxComida = findViewById(R.id.checkBoxComida)
         checkBoxElectronica = findViewById(R.id.checkBoxElectronica)
         checkBoxJoyeria = findViewById(R.id.checkBoxJoyeria)
 
-        // Obtén el valor de "boleta" del Intent
-        boleta = intent.getStringExtra("boleta")
+        boleta = intent.getStringExtra("BoletaPV")
+        productoid = intent.getStringExtra("ProductoIdPV")
+
+        if (boleta == null || productoid == null) {
+            Toast.makeText(this, "Datos insuficientes para editar el producto", Toast.LENGTH_LONG).show()
+            finish()
+            return
+        }
+
+        Toast.makeText(this, "Boleta: $boleta, ProductoID: $productoid", Toast.LENGTH_LONG).show()
 
         btnBuscar.setOnClickListener { showFileChooser() }
 
         btnSubir = findViewById(R.id.buttonagregar)
         btnSubir.setOnClickListener {
             uploadImage()
-            // Redirigir a Perfil
-            val intent = Intent(this@EditarProducto, PerfilVendedor::class.java).apply { putExtra("boletaI", boleta ) }
+            val intent = Intent(this@EditarProducto, PerfilVendedor::class.java).apply { putExtra("boletaI", boleta) }
             startActivity(intent)
         }
 
@@ -121,7 +124,7 @@ class EditarProducto : AppCompatActivity() {
                 Request.Method.POST, uploadUrl,
                 Response.Listener<String?> { response ->
                     progressBar.visibility = ProgressBar.GONE
-                    Snackbar.make(findViewById(android.R.id.content), response ?: "Error" , Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(findViewById(android.R.id.content), response ?: "Error", Snackbar.LENGTH_LONG).show()
                 },
                 Response.ErrorListener { error ->
                     progressBar.visibility = ProgressBar.GONE
@@ -134,9 +137,9 @@ class EditarProducto : AppCompatActivity() {
                     val nombre = et?.text?.toString()?.trim() ?: ""
                     val precio = et1?.text?.toString()?.trim() ?: ""
 
-                    if (boleta.isNullOrBlank()) {
-                        Log.e("NewProducto", "El campo Boleta está vacío.")
-                        Snackbar.make(findViewById(android.R.id.content), "El campo Boleta es requerido.", Snackbar.LENGTH_LONG).show()
+                    if (boleta.isNullOrBlank() || productoid.isNullOrBlank()) {
+                        Log.e("NewProducto", "El campo Boleta o ProductoID está vacío.")
+                        Snackbar.make(findViewById(android.R.id.content), "Los campos Boleta y ProductoID son requeridos.", Snackbar.LENGTH_LONG).show()
                         return emptyMap()
                     }
 
@@ -146,7 +149,6 @@ class EditarProducto : AppCompatActivity() {
                     params[keyPrecio] = precio
                     params[keyIdVendedor] = boleta!!
 
-                    // Agregar categorías a los parámetros
                     params[keyAccesorios] = if (checkBoxAccesorios.isChecked) "1" else "0"
                     params[keyComida] = if (checkBoxComida.isChecked) "1" else "0"
                     params[keyElectronica] = if (checkBoxElectronica.isChecked) "1" else "0"
