@@ -1,5 +1,6 @@
 package com.example.proyectomovil
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -51,9 +52,13 @@ class PerfilVendedor : AppCompatActivity() {
         tbProductos = findViewById(R.id.tbProductos)
         tbProductos?.removeAllViews()
 
+        // Obtén el valor de "boletaI" del Intent
+        val boleta = intent.getStringExtra("boletaI") ?: ""
+
         val queue = Volley.newRequestQueue(this)
-        val boleta = intent.getStringExtra("boletaI")!!
+
         val url = "http://192.168.100.129:8080/Movil/consulta.php?idBoleta=${boleta}"
+        //val url = "http://10.109.77.160:8080/Movil/consulta.php?idBoleta=${boleta}"
         val jsonArrayRequest = JsonArrayRequest(
             Request.Method.GET, url, null,
             { response ->
@@ -109,5 +114,12 @@ class PerfilVendedor : AppCompatActivity() {
 
     fun clickTablaBorrar(view: View) {
         Toast.makeText(this, view.id.toString(), Toast.LENGTH_LONG).show()
+    }
+
+    fun clickAgregarP(view: View){
+        // Redirigir a Agregar producto
+        val boleta = intent.getStringExtra("boletaI") ?: ""
+        val intent = Intent(this@PerfilVendedor, AgregarProducto ::class.java).apply { putExtra("boleta", boleta)}
+        startActivity(intent)
     }
 }

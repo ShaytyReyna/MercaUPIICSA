@@ -101,6 +101,7 @@ class LoginActivity : AppCompatActivity() {
             user.contrasena =contra?.text.toString()
             //val url = "http://192.168.1.70//movil/login.php?idBoleta=${boleta?.text.toString()}"
             val url = "http://192.168.100.129:8080//movil/login.php?idBoleta=${boleta?.text.toString()}"
+            //val url = "http://10.109.77.160:8080//movil/login.php?idBoleta=${boleta?.text.toString()}"
 
             val jsonObjectRequest = JsonObjectRequest(
                 Request.Method.GET,url,null,

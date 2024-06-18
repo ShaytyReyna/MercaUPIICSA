@@ -10,7 +10,6 @@ import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
@@ -18,17 +17,15 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import android.util.Base64
 import android.util.Log
-
 import com.example.proyectomovil.data.model.User
 import com.example.proyectomovil.ui.login.LoginActivity
 import java.util.*
 
-class NewProducto : AppCompatActivity() {
+class AgregarProducto : AppCompatActivity() {
     lateinit var user: User
 
     private lateinit var btnBuscar: Button
@@ -58,6 +55,8 @@ class NewProducto : AppCompatActivity() {
     private val keyElectronica = "Electronica"
     private val keyJoyeria = "Joyeria"
 
+    private var boleta: String? = null
+
     private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,12 +78,16 @@ class NewProducto : AppCompatActivity() {
         checkBoxElectronica = findViewById(R.id.checkBoxElectronica)
         checkBoxJoyeria = findViewById(R.id.checkBoxJoyeria)
 
+        // Obtén el valor de "boleta" del Intent
+        boleta = intent.getStringExtra("boleta")
+
         btnBuscar.setOnClickListener { showFileChooser() }
 
         btnSubir = findViewById(R.id.buttonagregar)
-        btnSubir.setOnClickListener { uploadImage()
-            // Redirigir a Login
-            val intent = Intent(this@NewProducto, LoginActivity ::class.java)
+        btnSubir.setOnClickListener {
+            uploadImage()
+            // Redirigir a Perfil
+            val intent = Intent(this@AgregarProducto, PerfilVendedor::class.java).apply { putExtra("boletaI", boleta ) }
             startActivity(intent)
         }
 
@@ -132,7 +135,6 @@ class NewProducto : AppCompatActivity() {
                     val nombre = et?.text?.toString()?.trim() ?: ""
                     val precio = et1?.text?.toString()?.trim() ?: ""
 
-                    val boleta = intent.getStringExtra("boleta")
                     if (boleta.isNullOrBlank()) {
                         Log.e("NewProducto", "El campo Boleta está vacío.")
                         Snackbar.make(findViewById(android.R.id.content), "El campo Boleta es requerido.", Snackbar.LENGTH_LONG).show()
@@ -143,7 +145,7 @@ class NewProducto : AppCompatActivity() {
                     params[keyImage] = imagen
                     params[keyNombre] = nombre
                     params[keyPrecio] = precio
-                    params[keyIdVendedor] = boleta
+                    params[keyIdVendedor] = boleta!!
 
                     // Agregar categorías a los parámetros
                     params[keyAccesorios] = if (checkBoxAccesorios.isChecked) "1" else "0"

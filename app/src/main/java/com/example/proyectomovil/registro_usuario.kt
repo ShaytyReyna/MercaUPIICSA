@@ -58,6 +58,7 @@ class registro_usuario : AppCompatActivity() {
     fun clickBtnRegistro(view: View){
         //val url = "http://192.168.1.70/movil/NuevoVendedor.php"
         val url = "http://192.168.100.129:8080/movil/nuevoVendedor.php"
+        //val url = "http://10.109.77.160:8080/movil/nuevoVendedor.php"
         val queue = Volley.newRequestQueue(this)
 
         // Validaciones
