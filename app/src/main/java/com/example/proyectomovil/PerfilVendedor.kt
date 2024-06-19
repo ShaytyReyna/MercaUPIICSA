@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.example.proyectomovil.databinding.ActivityPerfilVendedorBinding
@@ -50,6 +51,60 @@ class PerfilVendedor : AppCompatActivity() {
         sabado = findViewById(R.id.textinputsabado)
         domingo = findViewById(R.id.textinputdomingo)
 
+        cargarDatos()
+    }
+
+    fun clickTablaEditar(view: View) {
+        val boleta = intent.getStringExtra("boletaI") ?: ""
+        Toast.makeText(this, view.id.toString(), Toast.LENGTH_LONG).show()
+        //Pasamos a Editar producto pasandole el id del producto y la bol
+        val producto = intent.getStringExtra(view.id.toString())
+        val intent = Intent(this@PerfilVendedor, EditarProducto :: class.java)
+        intent.putExtra("BoletaPV", boleta)
+        intent.putExtra("ProductoIdPV",producto)
+        startActivity(intent)
+        Toast.makeText(this, boleta, Toast.LENGTH_LONG).show()
+    }
+
+    fun clickTablaBorrar(view: View) {
+        val boleta = intent.getStringExtra("boletaI") ?: ""
+        Toast.makeText(this, view.id.toString(), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, boleta, Toast.LENGTH_LONG).show()
+        val queue = Volley.newRequestQueue(this)
+        //val urlBorrar = "http://192.168.0.17/Movil/borrarProducto.php?idBoleta=${boleta}&idProducto=${view.id.toString()}"
+        val urlBorrar = "http://192.168.100.129:8080/Movil/borrarProducto.php?idBoleta=${boleta}&idProducto=${view.id.toString()}"
+        //val url = "http://10.109.75.143:8080/Movil/consulta.php?idBoleta=${boleta}"
+        val jsonArrayRequest = JsonObjectRequest(
+            Request.Method.GET, urlBorrar, null,
+            { response ->
+                if (response.getString("state").equals("0")) {
+                    cargarDatos()
+                } else {
+                    Toast.makeText(this, "Ocurrio un error", Toast.LENGTH_LONG).show()
+                }
+            }, { error ->
+                Toast.makeText(this, error.toString(), Toast.LENGTH_LONG).show()
+                Log.e("PerfilVendedor", error.toString())
+            }
+        )
+        queue.add(jsonArrayRequest)
+
+        val producto = intent.getStringExtra(view.id.toString())
+    }
+
+    fun clickAgregarP(view: View){
+        // Redirigir a Agregar producto
+        val boleta = intent.getStringExtra("boletaI") ?: ""
+        val intent = Intent(this@PerfilVendedor, AgregarProducto ::class.java).apply { putExtra("boleta", boleta)}
+        startActivity(intent)
+    }
+    fun clickRegresar(view: View){
+        // Redirigir a Home
+        val intent = Intent(this@PerfilVendedor, Home0Activity ::class.java)
+        startActivity(intent)
+    }
+
+    fun cargarDatos(){
         tbProductos = findViewById(R.id.tbProductos)
         tbProductos?.removeAllViews()
 
@@ -58,7 +113,8 @@ class PerfilVendedor : AppCompatActivity() {
 
         val queue = Volley.newRequestQueue(this)
 
-        val url = "http://192.168.100.129:8080/Movil/consulta.php?idBoleta=${boleta}"
+        //val url = "http://192.168.0.17/movil/consulta.php?idBoleta=${boleta}"
+        val url = "http://192.168.100.129:8080/movil/consulta.php?idBoleta=${boleta}"
         //val url = "http://10.109.75.143:8080/Movil/consulta.php?idBoleta=${boleta}"
         val jsonArrayRequest = JsonArrayRequest(
             Request.Method.GET, url, null,
@@ -111,36 +167,5 @@ class PerfilVendedor : AppCompatActivity() {
             }
         )
         queue.add(jsonArrayRequest)
-    }
-
-    fun clickTablaEditar(view: View) {
-        val boleta = intent.getStringExtra("boletaI") ?: ""
-        val productoId = view.id.toString()
-
-        val intent = Intent(this@PerfilVendedor, EditarProducto::class.java)
-        intent.putExtra("BoletaPV", boleta)
-        intent.putExtra("ProductoIdPV", productoId)
-        startActivity(intent)
-    }
-
-
-    fun clickTablaBorrar(view: View) {
-        val boleta = intent.getStringExtra("boletaI") ?: ""
-        Toast.makeText(this, view.id.toString(), Toast.LENGTH_LONG).show()
-        Toast.makeText(this, boleta, Toast.LENGTH_LONG).show()
-
-        val producto = intent.getStringExtra(view.id.toString())
-    }
-
-    fun clickAgregarP(view: View){
-        // Redirigir a Agregar producto
-        val boleta = intent.getStringExtra("boletaI") ?: ""
-        val intent = Intent(this@PerfilVendedor, AgregarProducto ::class.java).apply { putExtra("boleta", boleta)}
-        startActivity(intent)
-    }
-    fun clickRegresar(view: View){
-        // Redirigir a Home
-        val intent = Intent(this@PerfilVendedor, Home0Activity ::class.java)
-        startActivity(intent)
     }
 }

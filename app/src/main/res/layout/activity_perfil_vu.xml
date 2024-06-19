@@ -19,17 +19,24 @@
                       android:gravity="center"
                       android:orientation="vertical" android:id="@+id/linearLayoutSupremo">
 
-            <TextView
-                    android:text="Califica al vendedor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/calv"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:textStyle="bold"
-                    android:layout_marginTop="26dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            />
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
 
+                          app:layout_constraintEnd_toEndOf="parent"
+                          app:layout_constraintStart_toStartOf="parent"
+                          android:orientation="horizontal">
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@android:drawable/ic_menu_revert"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginStart="5dp"
+                        android:id="@+id/btnRegresar" android:onClick="clickRegresar"/>
+            </LinearLayout>
             <LinearLayout android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           app:layout_constraintStart_toStartOf="parent"
@@ -105,6 +112,27 @@
                             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
                 </LinearLayout>
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              app:layout_constraintStart_toStartOf="parent"
+
+                              android:orientation="horizontal" android:id="@+id/linearLayoutIns"
+                              app:layout_constraintTop_toBottomOf="@+id/linearLayoutTel" android:layout_marginTop="8dp"
+                              app:layout_constraintEnd_toEndOf="parent">
+                    <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp" app:srcCompat="@drawable/instagram"
+                            android:id="@+id/imageViewIns"
+                            app:layout_constraintEnd_toStartOf="@+id/facevendedor"
+                            android:layout_marginEnd="16dp"/>
+                    <TextView
+                            android:text="usuario"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/Insvendedor"
+
+                            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
@@ -116,88 +144,21 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" android:textStyle="bold"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayoutFace" android:layout_marginTop="32dp"/>
 
+            <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <LinearLayout android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
+                <TableLayout
+                        android:id="@+id/tbProductos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
 
-                          app:layout_constraintEnd_toEndOf="parent"
-                          app:layout_constraintStart_toStartOf="parent"
-                          android:background="#AAADAD"
-                          android:gravity="center"
-                          android:orientation="vertical" android:id="@+id/linearLayout"
-                          app:layout_constraintTop_toBottomOf="@+id/Productos" android:layout_marginTop="8dp">
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_menu_gallery"
-                        android:id="@+id/imageProducto1"
-                        tools:layout_editor_absoluteX="114dp"/>
-                <TextView
-                        android:text="Nombre_Producto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/NProducto1"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageProducto1"
-                        android:layout_marginTop="8dp"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-                <TextView
-                        android:text="$$$$.$$"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/PProducto1"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/NProducto1"
-                        android:layout_marginTop="8dp"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-                <TextView
-                        android:text="Tipo_producto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/TProducto1"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/PProducto1"
-                        android:layout_marginTop="8dp"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
-            </LinearLayout>
 
-            <LinearLayout android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-
-                          app:layout_constraintEnd_toEndOf="parent"
-                          app:layout_constraintStart_toStartOf="parent"
-                          android:background="#AAADAD"
-                          android:gravity="center"
-                          android:orientation="vertical" android:id="@+id/linearLayout2"
-                          app:layout_constraintTop_toBottomOf="@+id/linearLayout" android:layout_marginTop="16dp">
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_menu_gallery"
-                        android:id="@+id/imageProducto2"
-                        tools:layout_editor_absoluteX="114dp"/>
-                <TextView
-                        android:text="Nombre_Producto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/NProducto2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageProducto1"
-                        android:layout_marginTop="8dp"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-                <TextView
-                        android:text="$$$$.$$"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/PProducto2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/NProducto1"
-                        android:layout_marginTop="8dp"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-                <TextView
-                        android:text="Tipo_producto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/TProducto2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/PProducto1"
-                        android:layout_marginTop="8dp"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-
-            </LinearLayout>
+                </TableLayout>
+            </HorizontalScrollView>
 
 
             <TextView
@@ -208,9 +169,17 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:textStyle="bold"
 
-                    android:layout_marginStart="-142dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutP" android:layout_marginTop="24dp"/>
+                    app:layout_constraintHorizontal_bias="0.076"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+            <TextView
+                    android:id="@+id/instrucciones"
+                    android:layout_width="356dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="65dp"
+                    android:text="Horas disponibles para realizar ventas"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="#072E08"/>
+
 
             <LinearLayout android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
@@ -225,9 +194,10 @@
                         android:layout_height="wrap_content" android:id="@+id/lunes"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
                 <TextView
-                        android:text="07:00 - 22:00"
+                        android:text="--:-- - --:--"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/luneshi"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/luneshi"
 
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         app:layout_constraintStart_toEndOf="@+id/lunes"
@@ -248,9 +218,10 @@
                         android:layout_height="wrap_content" android:id="@+id/martes"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
                 <TextView
-                        android:text="07:00 - 22:00"
+                        android:text="--:-- - --:--"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/marteshi"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/marteshi"
 
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         app:layout_constraintStart_toEndOf="@+id/martes"
@@ -270,9 +241,10 @@
                         android:layout_height="wrap_content" android:id="@+id/miercoles"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
                 <TextView
-                        android:text="07:00 - 22:00"
+                        android:text="--:-- - --:--"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/miercoleshi"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/miercoleshi"
 
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         app:layout_constraintStart_toEndOf="@+id/miercoles"
@@ -292,9 +264,10 @@
                         android:layout_height="wrap_content" android:id="@+id/jueves"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
                 <TextView
-                        android:text="07:00 - 22:00"
+                        android:text="--:-- - --:--"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/jueveshi"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/jueveshi"
 
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         app:layout_constraintStart_toEndOf="@+id/jueves"
@@ -313,15 +286,65 @@
                         android:layout_height="wrap_content" android:id="@+id/viernes"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
                 <TextView
-                        android:text="07:00 - 22:00"
+                        android:text="--:-- - --:--"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/vierneshi"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/vierneshi"
 
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         app:layout_constraintStart_toEndOf="@+id/viernes"
                         android:layout_marginStart="36dp"/>
             </LinearLayout>
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          app:layout_constraintStart_toStartOf="parent"
+                          android:gravity="center"
+                          android:orientation="horizontal"
+                          android:id="@+id/linearLayoutHS"
+                          app:layout_constraintTop_toBottomOf="@+id/linearLayoutHV" android:layout_marginTop="8dp"
+                          app:layout_constraintEnd_toEndOf="parent">
+                <TextView
+                        android:text="Sabado"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sabado"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                <TextView
+                        android:text="--:-- - --:--"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sabadohi"
 
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        app:layout_constraintStart_toEndOf="@+id/sabado"
+                        android:layout_marginStart="36dp"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          app:layout_constraintStart_toStartOf="parent"
+                          android:gravity="center"
+                          android:orientation="horizontal"
+                          android:id="@+id/linearLayoutHD"
+                          app:layout_constraintTop_toBottomOf="@+id/linearLayoutHS"
+                          android:layout_marginTop="8dp"
+                          android:layout_marginBottom="20dp"
+                          app:layout_constraintEnd_toEndOf="parent">
+                <TextView
+                        android:text="Domingo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/domingo"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                <TextView
+                        android:text="--:-- - --:--"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/domingohi"
+
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        app:layout_constraintStart_toEndOf="@+id/domingo"
+                        android:layout_marginStart="36dp"/>
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
