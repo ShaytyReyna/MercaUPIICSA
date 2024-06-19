@@ -21,6 +21,10 @@ import java.io.ByteArrayOutputStream
 import java.io.IOException
 import android.util.Base64
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import com.android.volley.toolbox.JsonArrayRequest
+import com.bumptech.glide.Glide
 import com.example.proyectomovil.data.model.User
 import com.example.proyectomovil.ui.login.LoginActivity
 import java.util.*
@@ -40,12 +44,14 @@ class EditarProducto : AppCompatActivity() {
     private lateinit var checkBoxJoyeria: CheckBox
 
     private var bitmap: Bitmap? = null
-    private val uploadUrl = "http://10.109.75.143:8080/movil/nuevoProducto.php"
+    //private val uploadUrl = "http://10.109.75.143:8080/movil/nuevoProducto.php"
+
 
     private val keyImage = "foto"
     private val keyNombre = "nombre"
     private val keyPrecio = "precio"
     private val keyIdVendedor = "idVendedor"
+    private val keyIdProducto = "idProducto"
 
     private val keyAccesorios = "Accesorios"
     private val keyComida = "Comida"
@@ -62,6 +68,7 @@ class EditarProducto : AppCompatActivity() {
 
         user = User()
 
+
         btnBuscar = findViewById(R.id.btnBuscar)
         progressBar = findViewById(R.id.progressBar)
         et = findViewById(R.id.textinputnameP)
@@ -76,6 +83,8 @@ class EditarProducto : AppCompatActivity() {
         boleta = intent.getStringExtra("BoletaPV")
         productoid = intent.getStringExtra("ProductoIdPV")
 
+        val queue = Volley.newRequestQueue(this)
+
         if (boleta == null || productoid == null) {
             Toast.makeText(this, "Datos insuficientes para editar el producto", Toast.LENGTH_LONG).show()
             finish()
@@ -83,6 +92,41 @@ class EditarProducto : AppCompatActivity() {
         }
 
         Toast.makeText(this, "Boleta: $boleta, ProductoID: $productoid", Toast.LENGTH_LONG).show()
+        val url = "http://192.168.100.129:8080/movil/EditarP.php?idVendedor=${boleta}&idProducto=${productoid}"
+
+        val jsonArrayRequest = JsonArrayRequest(
+            Request.Method.GET, url, null,
+            { response ->
+                if (response.length() > 0) {
+                    val jsonObject = response.getJSONObject(0)
+
+                    et.setText(jsonObject.getString("ProductoNombre"))
+                    et1.setText(jsonObject.getString("ProductoPrecio"))
+                    val a = jsonObject.getInt("Accesorios")
+                    val c = jsonObject.getInt("Comida")
+                    val e = jsonObject.getInt("Electronica")
+                    val j = jsonObject.getInt("Joyeria")
+
+                    if (e == 1)
+                        checkBoxElectronica!!.isChecked = true
+                    if(a == 1)
+                        checkBoxAccesorios!!.isChecked = true
+                    if(c == 1)
+                        checkBoxComida!!.isChecked = true
+                    if (j == 1)
+                        checkBoxJoyeria!!.isChecked= true
+
+
+
+                } else {
+                    Toast.makeText(this, "No hay registros", Toast.LENGTH_LONG).show()
+                }
+            }, { error ->
+                Toast.makeText(this, error.toString(), Toast.LENGTH_LONG).show()
+                Log.e("Editar Producto", error.toString())
+            }
+        )
+        queue.add(jsonArrayRequest)
 
         btnBuscar.setOnClickListener { showFileChooser() }
 
@@ -118,6 +162,8 @@ class EditarProducto : AppCompatActivity() {
     }
 
     private fun uploadImage() {
+        //****//
+        val uploadUrl = "http://192.168.100.129:8080/movil/ActualizarP.php"
         bitmap?.let {
             progressBar.visibility = ProgressBar.VISIBLE
             val stringRequest: StringRequest = object : StringRequest(
@@ -144,6 +190,7 @@ class EditarProducto : AppCompatActivity() {
                     }
 
                     val params: MutableMap<String, String> = Hashtable()
+                    params[keyIdProducto] = productoid!!
                     params[keyImage] = imagen
                     params[keyNombre] = nombre
                     params[keyPrecio] = precio
@@ -155,6 +202,7 @@ class EditarProducto : AppCompatActivity() {
                     params[keyJoyeria] = if (checkBoxJoyeria.isChecked) "1" else "0"
 
                     return params
+
                 }
             }
 

@@ -230,7 +230,7 @@
 
             <TableLayout
                     android:layout_width="360dp"
-                    android:layout_height="200dp"
+                    android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:id="@+id/tbProductos">
