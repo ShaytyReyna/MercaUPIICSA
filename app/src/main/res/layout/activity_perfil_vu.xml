@@ -58,6 +58,7 @@
                     android:id="@+id/user"
                     android:textSize="25sp"
                     android:textStyle="bold"
+                    android:textColor="#416D19"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintHorizontal_bias="0.493" app:layout_constraintTop_toBottomOf="@+id/imageView4"
@@ -136,7 +137,9 @@
             </LinearLayout>
 
             <TextView
-                    android:text="Productos" android:layout_marginStart="-136dp"
+                    android:text="Productos"
+                    android:layout_marginStart="-136dp"
+                    android:textColor="#416D19"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/Productos"
                     app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
@@ -164,7 +167,10 @@
             <TextView
                     android:text="Horarios"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView2"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="-145dp"
+                    android:textColor="#416D19"
+                    android:id="@+id/textView2"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:textStyle="bold"

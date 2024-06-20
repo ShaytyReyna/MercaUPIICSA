@@ -41,7 +41,7 @@ class Home0Activity : AppCompatActivity() {
                         val idVendedor = producto.getInt("idVendedor")
 
                         colNombre.text = producto.getString("NOMBRE")
-                        colPrecio.text = producto.getString("PRECIO")
+                        colPrecio.text = "$"+producto.getString("PRECIO")
 
                         val imageUrl = producto.getString("IMG")
                         Glide.with(this).load(imageUrl).into(colIMG)
@@ -69,7 +69,6 @@ class Home0Activity : AppCompatActivity() {
         binding.butoncito.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-            Toast.makeText(this, "Butoncito funciona", Toast.LENGTH_LONG).show()
         }
     }
 }

@@ -7,12 +7,17 @@
             android:id="@+id/colNombre"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:text="nombre"
+            android:textSize="18dp"
+    />
 
     <TextView
             android:id="@+id/colPrecio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="precio"
+            android:textSize="18dp"
             android:layout_weight="1" />
 
     <ImageView

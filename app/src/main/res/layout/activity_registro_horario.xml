@@ -22,6 +22,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/Hdispo"
             android:layout_marginTop="32dp"
+            android:textStyle="bold"
+            android:textColor="#416D19"
+            android:textSize="25dp"
             app:layout_constraintTop_toBottomOf="@+id/textinputlayoutboleta"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,6 +37,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/lunes"
+            android:textColor="#416D19"
+            android:layout_marginTop="15dp"
+            android:textSize="20dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" tools:layout_editor_absoluteY="46dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -61,6 +67,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/martes"
+            android:textColor="#416D19"
+            android:layout_marginTop="5dp"
+            android:textSize="20dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             tools:layout_editor_absoluteY="153dp"/>
 
@@ -89,6 +98,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/miercoles"
+            android:textColor="#416D19"
+            android:layout_marginTop="5dp"
+            android:textSize="20dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" tools:layout_editor_absoluteY="260dp"/>
     <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -115,6 +127,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/jueves"
+            android:textColor="#416D19"
+            android:layout_marginTop="5dp"
+            android:textSize="20dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" tools:layout_editor_absoluteY="367dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -142,6 +157,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/viernes"
+            android:textColor="#416D19"
+            android:layout_marginTop="5dp"
+            android:textSize="20dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" tools:layout_editor_absoluteY="474dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -169,6 +187,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sabado"
+            android:textColor="#416D19"
+            android:layout_marginTop="5dp"
+            android:textSize="20dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             tools:layout_editor_absoluteY="581dp"/>
     <com.google.android.material.textfield.TextInputLayout
@@ -195,6 +216,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/domingo"
+            android:textColor="#416D19"
+            android:layout_marginTop="5dp"
+            android:textSize="20dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" tools:layout_editor_absoluteY="688dp"/>
     <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -219,7 +243,12 @@
                 android:text="Siguiente"
                 android:layout_width="346dp"
                 android:layout_height="wrap_content"
-                android:onClick="clickBtnRegistroH" android:textSize="20sp"/>
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:textColor="#FFF67E"
+                android:backgroundTint="#9BCF53"
+                android:onClick="clickBtnRegistroH"
+                android:textSize="20sp"/>
     </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

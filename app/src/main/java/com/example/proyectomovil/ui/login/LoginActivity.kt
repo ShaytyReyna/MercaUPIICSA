@@ -153,6 +153,10 @@ class LoginActivity : AppCompatActivity() {
         val regex = """^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$""".toRegex()
         return contraseña.matches(regex)
     }
-
+    fun clickRegresar(view: View){
+        // Redirigir a Login
+        val intent = Intent(this@LoginActivity, LoginActivity ::class.java)
+        startActivity(intent)
+    }
 }
 

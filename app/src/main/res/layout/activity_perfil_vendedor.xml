@@ -28,13 +28,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@android:drawable/ic_menu_revert"
-
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         android:layout_marginTop="5dp"
                         android:layout_marginStart="5dp"
                         android:id="@+id/btnRegresar" android:onClick="clickRegresar"/>
+                <!--
                 <Switch
                         android:text="Activo"
                         android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
 
                         app:layout_constraintHorizontal_bias="0.909" tools:ignore="UseSwitchCompatOrMaterialXml"
                         android:switchTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:layout_marginStart="220dp"/>
+                        android:layout_marginStart="220dp"/>-->
 
             </LinearLayout>
 
@@ -115,14 +115,14 @@
                             android:layout_height="wrap_content"
                             android:enabled="false"/>
                 </com.google.android.material.textfield.TextInputLayout>
-
+<!--
                 <ImageButton
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         app:srcCompat="@android:drawable/ic_menu_edit"
                         android:id="@+id/ButtonEditTel"
                         app:layout_constraintStart_toEndOf="@+id/telvendedor"
-                        android:layout_marginStart="10dp"/>
+                        android:layout_marginStart="10dp"/>-->
             </LinearLayout>
 
             <LinearLayout android:layout_width="wrap_content"
@@ -159,14 +159,14 @@
                             android:layout_height="wrap_content"
                             android:enabled="false"/>
                 </com.google.android.material.textfield.TextInputLayout>
-
+<!--
                 <ImageButton
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         app:srcCompat="@android:drawable/ic_menu_edit"
                         android:id="@+id/ButtonEditUser"
                         app:layout_constraintStart_toEndOf="@+id/facevendedor"
-                        android:layout_marginStart="10dp"/>
+                        android:layout_marginStart="10dp"/>-->
             </LinearLayout>
 
             <LinearLayout android:layout_width="wrap_content"
@@ -209,22 +209,26 @@
                             android:layout_height="wrap_content"
                             android:enabled="false"/>
                 </com.google.android.material.textfield.TextInputLayout>
-
+<!--
                 <ImageButton
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         app:srcCompat="@android:drawable/ic_menu_edit"
                         android:id="@+id/ButtonEditIns"
                         app:layout_constraintStart_toEndOf="@+id/facevendedor"
-                        android:layout_marginStart="10dp"/>
+                        android:layout_marginStart="10dp"/>-->
             </LinearLayout>
 
             <TextView
-                    android:text="Productos" android:layout_marginStart="-136dp"
+                    android:text="Productos"
+                    android:layout_marginStart="-136dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/Productos"
-                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Productos"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.08"
+                    android:textColor="#416D19"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" android:textStyle="bold"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayoutFace" android:layout_marginTop="32dp"/>
 
@@ -240,38 +244,48 @@
             <Button
                     android:text="+"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/buttonagregar"
-                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttonagregar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.467"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayoutP"
-                    android:layout_marginTop="16dp" android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="#FFF67E"
+                    android:backgroundTint="#9BCF53"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:onClick="clickAgregarP"/>
 
-            <LinearLayout android:layout_width="wrap_content" android:layout_marginStart="-116dp"
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_marginStart="-145dp"
                           android:layout_height="wrap_content"
                           app:layout_constraintTop_toBottomOf="@+id/buttonagregar"
                           android:layout_marginTop="20dp"
                           app:layout_constraintEnd_toEndOf="parent"
                           app:layout_constraintStart_toStartOf="parent"
                           android:gravity="center"
-                          android:orientation="horizontal" android:id="@+id/linearLayoutHorio"
+                          android:orientation="horizontal"
+                          android:id="@+id/linearLayoutHorio"
                           app:layout_constraintHorizontal_bias="0.092">
 
                 <TextView
                         android:text="Horarios"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/textView2"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:textStyle="bold"
-
+                        android:textColor="#416D19"
                         app:layout_constraintHorizontal_bias="0.076"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+                <!--
                 <ImageButton
                         android:layout_width="40dp"
                         android:layout_height="40dp" app:srcCompat="@android:drawable/ic_menu_edit"
                         android:id="@+id/ButtonEditHora"
-                        app:layout_constraintStart_toEndOf="@+id/textView2" android:layout_marginStart="16dp"/>
+                        app:layout_constraintStart_toEndOf="@+id/textView2" android:layout_marginStart="16dp"/>-->
             </LinearLayout>
 
 

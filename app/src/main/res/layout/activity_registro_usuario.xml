@@ -42,11 +42,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/hola"
+                    android:textColor="#416D19"
                     android:layout_gravity="center_horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.061"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.061"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display2"
                     app:layout_constraintHorizontal_bias="0.498"/>
 
@@ -96,6 +98,7 @@
                     android:text="Genera tu contraseña"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="#416D19"
                     android:id="@+id/Gcontraseña"
                     android:layout_marginTop="32dp"
                     app:layout_constraintTop_toBottomOf="@+id/textinputlayoutviernes"
@@ -157,7 +160,7 @@
                     android:id="@+id/contacto"
                     android:layout_marginTop="32dp"
                     app:layout_constraintEnd_toEndOf="parent"
-
+                    android:textColor="#416D19"
                     app:layout_constraintTop_toBottomOf="@+id/textinputlayoutcontraseña2"
                     app:layout_constraintStart_toStartOf="parent"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
@@ -222,6 +225,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="clickBtnRegistro"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:textColor="#FFF67E"
+                    android:backgroundTint="#9BCF53"
                     android:textSize="24sp"/>
 
 

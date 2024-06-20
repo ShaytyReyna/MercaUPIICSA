@@ -32,6 +32,7 @@
                     android:layout_weight="1"
                     android:id="@+id/editarProducto"
                     android:textStyle="bold"
+                    android:textColor="#416D19"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -82,6 +83,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/catProducto"
                     android:textStyle="bold"
+                    android:textColor="#416D19"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:layout_marginTop="16dp"/>
 
@@ -124,6 +126,7 @@
                     android:layout_weight="1"
                     android:id="@+id/imagenP"
                     android:textStyle="bold"
+                    android:textColor="#416D19"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:layout_marginTop="45dp"/>
 
@@ -131,7 +134,12 @@
                     android:id="@+id/btnBuscar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cambiar Imagen" android:textSize="24sp"/>
+                    android:textColor="#FFF67E"
+                    android:backgroundTint="#9BCF53"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Cambiar Imagen"
+                    android:textSize="24sp"/>
 
             <ImageView
                     android:id="@+id/imageView"
@@ -146,6 +154,9 @@
                     android:layout_weight="1"
                     android:id="@+id/buttonagregar"
                     android:layout_marginTop="24dp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="#FFF67E"
+                    android:backgroundTint="#9BCF53"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
             <ProgressBar
