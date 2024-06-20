@@ -1,6 +1,6 @@
 package com.example.proyectomovil
 
-import EditarProducto
+
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle

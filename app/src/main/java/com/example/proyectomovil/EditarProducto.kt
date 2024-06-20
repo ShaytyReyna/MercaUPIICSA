@@ -27,6 +27,7 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.bumptech.glide.Glide
 import com.example.proyectomovil.data.model.User
 import com.example.proyectomovil.ui.login.LoginActivity
+import org.json.JSONException
 import java.util.*
 class EditarProducto : AppCompatActivity() {
     lateinit var user: User
@@ -64,8 +65,6 @@ class EditarProducto : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editar_producto)
-                user = User()
-
 
         btnBuscar = findViewById(R.id.btnBuscar)
         progressBar = findViewById(R.id.progressBar)
@@ -81,57 +80,19 @@ class EditarProducto : AppCompatActivity() {
         boleta = intent.getStringExtra("BoletaPV")
         productoid = intent.getStringExtra("ProductoIdPV")
 
-        val queue = Volley.newRequestQueue(this)
-
         if (boleta == null || productoid == null) {
             Toast.makeText(this, "Datos insuficientes para editar el producto", Toast.LENGTH_LONG).show()
             finish()
             return
         }
 
-        val url = "http://192.168.100.129:8080/movil/EditarP.php?idVendedor=${boleta}&idProducto=${productoid}"
-
-        val jsonArrayRequest = JsonArrayRequest(
-            Request.Method.GET, url, null,
-            { response ->
-                if (response.length() > 0) {
-                    val jsonObject = response.getJSONObject(0)
-
-                    et.setText(jsonObject.getString("ProductoNombre"))
-                    et1.setText(jsonObject.getString("ProductoPrecio"))
-                    val a = jsonObject.getInt("Accesorios")
-                    val c = jsonObject.getInt("Comida")
-                    val e = jsonObject.getInt("Electronica")
-                    val j = jsonObject.getInt("Joyeria")
-
-                    if (e == 1)
-                        checkBoxElectronica!!.isChecked = true
-                    if(a == 1)
-                        checkBoxAccesorios!!.isChecked = true
-                    if(c == 1)
-                        checkBoxComida!!.isChecked = true
-                    if (j == 1)
-                        checkBoxJoyeria!!.isChecked= true
-
-
-
-                } else {
-                    Toast.makeText(this, "No hay registros", Toast.LENGTH_LONG).show()
-                }
-            }, { error ->
-                Toast.makeText(this, error.toString(), Toast.LENGTH_LONG).show()
-                Log.e("Editar Producto", error.toString())
-            }
-        )
-        queue.add(jsonArrayRequest)
+        cargarDatosProducto()
 
         btnBuscar.setOnClickListener { showFileChooser() }
 
         btnSubir = findViewById(R.id.buttonagregar)
         btnSubir.setOnClickListener {
             uploadImage()
-            val intent = Intent(this@EditarProducto, PerfilVendedor::class.java).apply { putExtra("boletaI", boleta) }
-            startActivity(intent)
         }
 
         imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -152,14 +113,51 @@ class EditarProducto : AppCompatActivity() {
         }
     }
 
+    private fun cargarDatosProducto() {
+        val url = "http://192.168.100.129:8080/movil/EditarP.php?idVendedor=${boleta}&idProducto=${productoid}"
+        val jsonArrayRequest = JsonArrayRequest(
+            Request.Method.GET, url, null,
+            { response ->
+                try {
+                    if (response.length() > 0) {
+                        val jsonObject = response.getJSONObject(0)
+
+                        et.setText(jsonObject.getString("ProductoNombre"))
+                        et1.setText(jsonObject.getString("ProductoPrecio"))
+
+                        val accesorios = jsonObject.getInt("Accesorios")
+                        val comida = jsonObject.getInt("Comida")
+                        val electronica = jsonObject.getInt("Electronica")
+                        val joyeria = jsonObject.getInt("Joyeria")
+
+                        checkBoxAccesorios.isChecked = accesorios == 1
+                        checkBoxComida.isChecked = comida == 1
+                        checkBoxElectronica.isChecked = electronica == 1
+                        checkBoxJoyeria.isChecked = joyeria == 1
+                    } else {
+                        Toast.makeText(this, "No se encontraron datos del producto", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                    Toast.makeText(this, "Error al procesar los datos del producto", Toast.LENGTH_SHORT).show()
+                }
+            },
+            { error ->
+                error.printStackTrace()
+                Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
+            }
+        )
+
+        Volley.newRequestQueue(this).add(jsonArrayRequest)
+    }
+
     private fun showFileChooser() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
-        imagePickerLauncher.launch(Intent.createChooser(intent, "Selecciona imagen"))
+        imagePickerLauncher.launch(Intent.createChooser(intent, "Selecciona una imagen"))
     }
 
     private fun uploadImage() {
-//****//
         val uploadUrl = "http://192.168.100.129:8080/movil/ActualizarP.php"
         bitmap?.let {
             progressBar.visibility = ProgressBar.VISIBLE
@@ -168,6 +166,10 @@ class EditarProducto : AppCompatActivity() {
                 Response.Listener<String?> { response ->
                     progressBar.visibility = ProgressBar.GONE
                     Snackbar.make(findViewById(android.R.id.content), response ?: "Error", Snackbar.LENGTH_LONG).show()
+                    // Informar a la actividad anterior (PerfilVendedor) que se han realizado cambios
+                    val intent = Intent()
+                    setResult(RESULT_OK, intent)
+                    finish() // Cerrar la actividad actual
                 },
                 Response.ErrorListener { error ->
                     progressBar.visibility = ProgressBar.GONE
@@ -176,17 +178,11 @@ class EditarProducto : AppCompatActivity() {
                 }) {
                 @Throws(AuthFailureError::class)
                 override fun getParams(): Map<String, String> {
-                    val imagen: String = getStringImagen(it)
-                    val nombre = et?.text?.toString()?.trim() ?: ""
-                    val precio = et1?.text?.toString()?.trim() ?: ""
+                    val imagen = getStringImagen(it)
+                    val nombre = et.text.toString().trim()
+                    val precio = et1.text.toString().trim()
 
-                            if (boleta.isNullOrBlank() || productoid.isNullOrBlank()) {
-                                Log.e("NewProducto", "El campo Boleta o ProductoID está vacío.")
-                                Snackbar.make(findViewById(android.R.id.content), "Los campos Boleta y ProductoID son requeridos.", Snackbar.LENGTH_LONG).show()
-                                return emptyMap()
-                            }
-
-                    val params: MutableMap<String, String> = Hashtable()
+                    val params: MutableMap<String, String> = HashMap()
                     params[keyIdProducto] = productoid!!
                     params[keyImage] = imagen
                     params[keyNombre] = nombre
@@ -199,12 +195,10 @@ class EditarProducto : AppCompatActivity() {
                     params[keyJoyeria] = if (checkBoxJoyeria.isChecked) "1" else "0"
 
                     return params
-
                 }
             }
 
-            val requestQueue = Volley.newRequestQueue(this)
-            requestQueue.add(stringRequest)
+            Volley.newRequestQueue(this).add(stringRequest)
         } ?: run {
             Snackbar.make(findViewById(android.R.id.content), "Selecciona una imagen primero", Snackbar.LENGTH_SHORT).show()
         }
