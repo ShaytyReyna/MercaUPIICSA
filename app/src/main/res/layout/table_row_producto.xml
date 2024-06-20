@@ -30,7 +30,8 @@
             android:id="@+id/colEditar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_edit" android:onClick="clickTablaEditar"/>
+            android:src="@android:drawable/ic_menu_edit"
+            android:onClick="clickTablaEditar"/>
 
     <ImageButton
             android:id="@+id/colBorrar"

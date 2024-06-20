@@ -1,11 +1,14 @@
 package com.example.proyectomovil
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
+import android.util.Log
 import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,14 +22,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import java.io.ByteArrayOutputStream
 import java.io.IOException
-import android.util.Base64
-import android.util.Log
-import com.example.proyectomovil.data.model.User
-import com.example.proyectomovil.ui.login.LoginActivity
 import java.util.*
 
 class AgregarProducto : AppCompatActivity() {
-    lateinit var user: User
 
     private lateinit var btnBuscar: Button
     private lateinit var btnSubir: Button
@@ -34,27 +32,21 @@ class AgregarProducto : AppCompatActivity() {
     private lateinit var iv: ImageView
     private lateinit var et: TextInputEditText
     private lateinit var et1: TextInputEditText
-
     private lateinit var checkBoxAccesorios: CheckBox
     private lateinit var checkBoxComida: CheckBox
     private lateinit var checkBoxElectronica: CheckBox
     private lateinit var checkBoxJoyeria: CheckBox
 
     private var bitmap: Bitmap? = null
-    //private val uploadUrl = "http://192.168.1.70/movil/NuevoProducto.php"
     private val uploadUrl = "http://192.168.100.129:8080/movil/nuevoProducto.php"
-    //private val uploadUrl = "http://10.109.75.143:8080/movil/nuevoProducto.php"
-
     private val keyImage = "foto"
     private val keyNombre = "nombre"
     private val keyPrecio = "precio"
     private val keyIdVendedor = "idVendedor"
-
     private val keyAccesorios = "Accesorios"
     private val keyComida = "Comida"
     private val keyElectronica = "Electronica"
     private val keyJoyeria = "Joyeria"
-
     private var boleta: String? = null
 
     private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
@@ -63,22 +55,17 @@ class AgregarProducto : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar_producto)
 
-        // Inicializa el objeto User
-        user = User()
-
         btnBuscar = findViewById(R.id.btnBuscar)
         progressBar = findViewById(R.id.progressBar)
         et = findViewById(R.id.textinputnameP)
         et1 = findViewById(R.id.textinputPrecioP)
         iv = findViewById(R.id.imageView)
 
-        // Inicializa los CheckBox
         checkBoxAccesorios = findViewById(R.id.checkBoxAccesorios)
         checkBoxComida = findViewById(R.id.checkBoxComida)
         checkBoxElectronica = findViewById(R.id.checkBoxElectronica)
         checkBoxJoyeria = findViewById(R.id.checkBoxJoyeria)
 
-        // Obtén el valor de "boleta" del Intent
         boleta = intent.getStringExtra("boleta")
 
         btnBuscar.setOnClickListener { showFileChooser() }
@@ -86,22 +73,20 @@ class AgregarProducto : AppCompatActivity() {
         btnSubir = findViewById(R.id.buttonagregar)
         btnSubir.setOnClickListener {
             uploadImage()
-            // Redirigir a Perfil
-            val intent = Intent(this@AgregarProducto, PerfilVendedor::class.java).apply { putExtra("boletaI", boleta ) }
-            startActivity(intent)
         }
 
+        // Inicialización del ActivityResultLauncher para el selector de imágenes
         imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK && result.data != null && result.data!!.data != null) {
-                val filePath = result.data!!.data
+            if (result.resultCode == Activity.RESULT_OK) {
+                val imageUri = result.data?.data
                 try {
-                    bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                        val source = ImageDecoder.createSource(this.contentResolver, filePath!!)
-                        ImageDecoder.decodeBitmap(source)
+                    bitmap = if (Build.VERSION.SDK_INT < 28) {
+                        MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
                     } else {
-                        MediaStore.Images.Media.getBitmap(contentResolver, filePath)
+                        val source = imageUri?.let { ImageDecoder.createSource(contentResolver, it) }
+                        source?.let { ImageDecoder.decodeBitmap(it) }
                     }
-                    iv.setImageBitmap(bitmap!!)
+                    iv.setImageBitmap(bitmap)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -110,64 +95,51 @@ class AgregarProducto : AppCompatActivity() {
     }
 
     private fun showFileChooser() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        val intent = Intent()
         intent.type = "image/*"
-        imagePickerLauncher.launch(Intent.createChooser(intent, "Selecciona imagen"))
+        intent.action = Intent.ACTION_GET_CONTENT
+        imagePickerLauncher.launch(Intent.createChooser(intent, "Selecciona una imagen"))
     }
 
     private fun uploadImage() {
-        bitmap?.let {
-            progressBar.visibility = ProgressBar.VISIBLE
-            val stringRequest: StringRequest = object : StringRequest(
-                Request.Method.POST, uploadUrl,
-                Response.Listener<String?> { response ->
-                    progressBar.visibility = ProgressBar.GONE
-                    Snackbar.make(findViewById(android.R.id.content), response ?: "Error" , Snackbar.LENGTH_LONG).show()
-                },
-                Response.ErrorListener { error ->
-                    progressBar.visibility = ProgressBar.GONE
-                    Snackbar.make(findViewById(android.R.id.content), error.message ?: "Error", Snackbar.LENGTH_LONG).show()
-                    Log.e("NewProducto", "Error en la solicitud HTTP: ${error.message}")
-                }) {
-                @Throws(AuthFailureError::class)
-                override fun getParams(): Map<String, String> {
-                    val imagen: String = getStringImagen(it)
-                    val nombre = et?.text?.toString()?.trim() ?: ""
-                    val precio = et1?.text?.toString()?.trim() ?: ""
+        progressBar.visibility = ProgressBar.VISIBLE
 
-                    if (boleta.isNullOrBlank()) {
-                        Log.e("NewProducto", "El campo Boleta está vacío.")
-                        Snackbar.make(findViewById(android.R.id.content), "El campo Boleta es requerido.", Snackbar.LENGTH_LONG).show()
-                        return emptyMap()
-                    }
-
-                    val params: MutableMap<String, String> = Hashtable()
-                    params[keyImage] = imagen
-                    params[keyNombre] = nombre
-                    params[keyPrecio] = precio
-                    params[keyIdVendedor] = boleta!!
-
-                    // Agregar categorías a los parámetros
-                    params[keyAccesorios] = if (checkBoxAccesorios.isChecked) "1" else "0"
-                    params[keyComida] = if (checkBoxComida.isChecked) "1" else "0"
-                    params[keyElectronica] = if (checkBoxElectronica.isChecked) "1" else "0"
-                    params[keyJoyeria] = if (checkBoxJoyeria.isChecked) "1" else "0"
-
-                    return params
-                }
+        val stringRequest: StringRequest = object : StringRequest(
+            Request.Method.POST, uploadUrl,
+            Response.Listener<String?> { response ->
+                progressBar.visibility = ProgressBar.GONE
+                Snackbar.make(findViewById(android.R.id.content), response ?: "Error", Snackbar.LENGTH_LONG).show()
+                setResult(Activity.RESULT_OK)
+                finish()
+            },
+            Response.ErrorListener { error ->
+                progressBar.visibility = ProgressBar.GONE
+                Snackbar.make(findViewById(android.R.id.content), error.message ?: "Error", Snackbar.LENGTH_LONG).show()
+                Log.e("AgregarProducto", "Error en la solicitud HTTP: ${error.message}")
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params: MutableMap<String, String> = HashMap()
+                params[keyImage] = bitmapToString(bitmap)
+                params[keyNombre] = et.text.toString().trim()
+                params[keyPrecio] = et1.text.toString().trim()
+                params[keyIdVendedor] = boleta ?: ""
+                params[keyAccesorios] = if (checkBoxAccesorios.isChecked) "1" else "0"
+                params[keyComida] = if (checkBoxComida.isChecked) "1" else "0"
+                params[keyElectronica] = if (checkBoxElectronica.isChecked) "1" else "0"
+                params[keyJoyeria] = if (checkBoxJoyeria.isChecked) "1" else "0"
+                return params
             }
-
-            val requestQueue = Volley.newRequestQueue(this)
-            requestQueue.add(stringRequest)
-        } ?: run {
-            Snackbar.make(findViewById(android.R.id.content), "Selecciona una imagen primero", Snackbar.LENGTH_SHORT).show()
         }
+
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(stringRequest)
     }
 
-    private fun getStringImagen(bmp: Bitmap): String {
-        val baos = ByteArrayOutputStream()
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val imageBytes = baos.toByteArray()
-        return Base64.encodeToString(imageBytes, Base64.DEFAULT)
+    private fun bitmapToString(bitmap: Bitmap?): String {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        val imgBytes: ByteArray = byteArrayOutputStream.toByteArray()
+        return Base64.encodeToString(imgBytes, Base64.DEFAULT)
     }
 }

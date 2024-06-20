@@ -44,8 +44,7 @@ class EditarProducto : AppCompatActivity() {
     private lateinit var checkBoxJoyeria: CheckBox
 
     private var bitmap: Bitmap? = null
-    //private val uploadUrl = "http://10.109.75.143:8080/movil/nuevoProducto.php"
-
+//private val uploadUrl = "http://10.109.75.143:8080/movil/nuevoProducto.php"
 
     private val keyImage = "foto"
     private val keyNombre = "nombre"
@@ -65,8 +64,7 @@ class EditarProducto : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editar_producto)
-
-        user = User()
+                user = User()
 
 
         btnBuscar = findViewById(R.id.btnBuscar)
@@ -161,7 +159,7 @@ class EditarProducto : AppCompatActivity() {
     }
 
     private fun uploadImage() {
-        //****//
+//****//
         val uploadUrl = "http://192.168.100.129:8080/movil/ActualizarP.php"
         bitmap?.let {
             progressBar.visibility = ProgressBar.VISIBLE
@@ -182,11 +180,11 @@ class EditarProducto : AppCompatActivity() {
                     val nombre = et?.text?.toString()?.trim() ?: ""
                     val precio = et1?.text?.toString()?.trim() ?: ""
 
-                    if (boleta.isNullOrBlank() || productoid.isNullOrBlank()) {
-                        Log.e("NewProducto", "El campo Boleta o ProductoID está vacío.")
-                        Snackbar.make(findViewById(android.R.id.content), "Los campos Boleta y ProductoID son requeridos.", Snackbar.LENGTH_LONG).show()
-                        return emptyMap()
-                    }
+                            if (boleta.isNullOrBlank() || productoid.isNullOrBlank()) {
+                                Log.e("NewProducto", "El campo Boleta o ProductoID está vacío.")
+                                Snackbar.make(findViewById(android.R.id.content), "Los campos Boleta y ProductoID son requeridos.", Snackbar.LENGTH_LONG).show()
+                                return emptyMap()
+                            }
 
                     val params: MutableMap<String, String> = Hashtable()
                     params[keyIdProducto] = productoid!!

@@ -155,7 +155,7 @@ class LoginActivity : AppCompatActivity() {
     }
     fun clickRegresar(view: View){
         // Redirigir a Login
-        val intent = Intent(this@LoginActivity, LoginActivity ::class.java)
+        val intent = Intent(this@LoginActivity, Home0Activity ::class.java)
         startActivity(intent)
     }
 }
